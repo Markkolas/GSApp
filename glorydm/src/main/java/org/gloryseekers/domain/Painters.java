@@ -4,8 +4,8 @@ public interface Painters {
 
     public abstract void start();
 
-    public abstract Character loadCharacter(String name);
+    public abstract Character requestCharacter(String name);
 
-    public abstract Character storeCharacter(Characters characters);
+    public abstract boolean storeCharacter(Characters characters);
     
 }

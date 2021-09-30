@@ -12,15 +12,15 @@ import javafx.stage.Stage;
 public class JavaFXPainter extends Application implements Painters {
 
     @Override
-    public Character loadCharacter(String name) {
+    public Character requestCharacter(String name) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Character storeCharacter(Characters characters) {
+    public boolean storeCharacter(Characters characters) {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
     @Override
