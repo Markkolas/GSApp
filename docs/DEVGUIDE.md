@@ -79,3 +79,15 @@ You should get something like this:
 	OS name: "linux", version: "5.4.15-arch1-1", arch: "amd64", family: "unix"
 
 ```
+
+## Run
+
+To run the project with java:
+
+```bash
+
+	cd glorydm
+	
+	mvn javafx:run
+
+```
