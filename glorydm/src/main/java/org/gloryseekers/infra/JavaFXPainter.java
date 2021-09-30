@@ -1,6 +1,5 @@
 package org.gloryseekers.infra;
 
-import org.gloryseekers.domain.Characters;
 import org.gloryseekers.domain.Painters;
 
 import javafx.application.Application;
@@ -10,18 +9,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class JavaFXPainter extends Application implements Painters {
-
-    @Override
-    public Character requestCharacter(String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean storeCharacter(Characters characters) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
