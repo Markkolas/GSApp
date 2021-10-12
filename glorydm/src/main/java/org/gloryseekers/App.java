@@ -9,18 +9,8 @@ public class App{
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
         final ManagementPort characterManager = new CharacterManager(storageManager); //load business manager
         final UI ui = new UI(); //load graphical interface
-        
+        ui.setManagementPort(CharacterManager.getInstance());
         ui.start(); //launch app
     }
-    
-    /*public void start(Stage primaryStage) throws Exception {
-        var label = new Label("Hello, glory seekers");
-        var scene = new Scene(new StackPane(label), 640, 480);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 
-    public void start() {
-        launch();
-    }*/
 }
