@@ -1,9 +1,9 @@
 package org.gloryseekers.infra;
 
-import org.gloryseekers.domain.Characters;
+import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.model.Character;
 
-public class CharacterXML implements Characters{
+public class CharacterXML implements CharacterPort{
 
     @Override
     public Character loadCharacter(String name) {

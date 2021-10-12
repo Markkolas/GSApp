@@ -1,28 +1,19 @@
 package org.gloryseekers.aplication;
 
-import org.gloryseekers.domain.Characters;
-import org.gloryseekers.domain.Painters;
+import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.CharacterXML;
-import org.gloryseekers.infra.JavaFXPainter;
 
-public class CharacterManager {
+public class CharacterManager implements ManagementPort {
 
-    private Painters painters;
-
-    private Characters characters;
-
-    private CharacterManager(Painters painters, Characters characters) {
-        this.painters = painters;
-        this.characters = characters;
-        painters.start();
-    }
-
-    private static class CharacterManagerSingleton {
-        private static final CharacterManager INSTANCE = new CharacterManager(new JavaFXPainter(), new CharacterXML()); 
-    }
-
-    public static CharacterManager getInstance() {
-        return CharacterManagerSingleton.INSTANCE;
-    }
-    
+	private static CharacterManager instance;
+	
+	private CharacterPort characterPort;
+	
+	public CharacterManager(CharacterPort characterPort) {
+		this.characterPort = characterPort;
+	}
+	
+	public static CharacterManager getInstance() {
+		return instance == null ? instance = new CharacterManager(new CharacterXML()) : instance;
+	}
 }
