@@ -1,18 +1,19 @@
 package org.gloryseekers.aplication;
 
-import org.gloryseekers.domain.Characters;
-import org.gloryseekers.domain.Painters;
-import org.gloryseekers.infra.CharacterXML;
-import org.gloryseekers.infra.UI;
+import org.gloryseekers.domain.*;
 
-public class CharacterManager {
+public class CharacterManager implements ManagementPort {
 
-    private static class CharacterManagerSingleton {
-        private static final CharacterManager INSTANCE = new CharacterManager(); 
-    }
-
-    public static CharacterManager getInstance() {
-        return CharacterManagerSingleton.INSTANCE;
-    }
-    
+	private static CharacterManager INSTANCE; //Puede ser util, de todas forma ver UI.java...
+	
+	private CharacterPort storageInterface;
+	
+	public CharacterManager(CharacterPort i) {
+		storageInterface = i;
+		INSTANCE = this;
+	}
+	
+	public static CharacterManager getThis() {
+		return INSTANCE;
+	}
 }
