@@ -3,22 +3,12 @@ package org.gloryseekers.aplication;
 import org.gloryseekers.domain.Characters;
 import org.gloryseekers.domain.Painters;
 import org.gloryseekers.infra.CharacterXML;
-import org.gloryseekers.infra.JavaFXPainter;
+import org.gloryseekers.infra.UI;
 
 public class CharacterManager {
 
-    private Painters painters;
-
-    private Characters characters;
-
-    private CharacterManager(Painters painters, Characters characters) {
-        this.painters = painters;
-        this.characters = characters;
-        painters.start();
-    }
-
     private static class CharacterManagerSingleton {
-        private static final CharacterManager INSTANCE = new CharacterManager(new JavaFXPainter(), new CharacterXML()); 
+        private static final CharacterManager INSTANCE = new CharacterManager(); 
     }
 
     public static CharacterManager getInstance() {

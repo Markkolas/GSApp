@@ -31,7 +31,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>org.gloryseekers.aplication.App</mainClass>
+                    <mainClass>org.gloryseekers.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
