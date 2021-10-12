@@ -4,9 +4,9 @@ import org.gloryseekers.domain.ManagementPort;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 public class UI extends Application {
 	
@@ -18,8 +18,8 @@ public class UI extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        var label = new Label("Hello, glory seekers");
-        var scene = new Scene(new StackPane(label), 640, 480);
+        TabPane root = FXMLLoader.load(UI.class.getResource("main.fxml"));
+        var scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
