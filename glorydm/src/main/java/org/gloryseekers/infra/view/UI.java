@@ -1,14 +1,10 @@
-package org.gloryseekers.infra;
-
-
+package org.gloryseekers.infra.view;
 
 import org.gloryseekers.domain.ManagementPort;
-import org.gloryseekers.infra.material.CharacterCard;
-
+import org.gloryseekers.infra.view.main.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -22,7 +18,10 @@ public class UI extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        TabPane root = FXMLLoader.load(UI.class.getResource("main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
+        fxmlLoader.setController(new MainController());
+
+        TabPane root = fxmlLoader.load();
         var scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

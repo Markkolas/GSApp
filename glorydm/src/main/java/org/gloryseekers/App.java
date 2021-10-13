@@ -3,6 +3,7 @@ package org.gloryseekers;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.*;
+import org.gloryseekers.infra.view.UI;
 
 public class App{
     public static void main(String[] args) {
