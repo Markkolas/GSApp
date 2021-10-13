@@ -1,19 +1,23 @@
 package org.gloryseekers.aplication;
 
 import org.gloryseekers.domain.*;
-import org.gloryseekers.infra.CharacterXML;
 
 public class CharacterManager implements ManagementPort {
 
-	private static CharacterManager instance;
+	private static CharacterManager instance = null;
 	
 	private CharacterPort characterPort;
 	
-	public CharacterManager(CharacterPort characterPort) {
+	private CharacterManager(CharacterPort characterPort) {
 		this.characterPort = characterPort;
 	}
 	
+	//I LIKE IT A LOT
+	public static CharacterManager getInstance(CharacterPort c) {
+		return instance == null ? instance = new CharacterManager(c) : instance;
+	}
+	
 	public static CharacterManager getInstance() {
-		return instance == null ? instance = new CharacterManager(new CharacterXML()) : instance;
+		return instance;
 	}
 }
