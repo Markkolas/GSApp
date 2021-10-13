@@ -7,9 +7,9 @@ import org.gloryseekers.infra.*;
 public class App{
     public static void main(String[] args) {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
-        final ManagementPort characterManager = new CharacterManager(storageManager); //load business manager
         final UI ui = new UI(); //load graphical interface
-        ui.setManagementPort(CharacterManager.getInstance());
+        
+        ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager nad give him to UI
         ui.start(); //launch app
     }
 
