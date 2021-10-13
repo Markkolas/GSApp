@@ -5,15 +5,20 @@ import java.io.IOException;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 
 public class CharacterCard extends AnchorPane {
-    @FXML private TextField nameText;
-    @FXML private TextField loadText;
-    @FXML private ImageView image;
+    @FXML 
+    private Label nameText;
+
+    @FXML 
+    private Label loadText;
+
+    @FXML 
+    private ImageView image;
 
 
     public CharacterCard () {

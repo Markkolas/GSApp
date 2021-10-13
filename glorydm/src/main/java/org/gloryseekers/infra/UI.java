@@ -22,9 +22,7 @@ public class UI extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        //TabPane root = FXMLLoader.load(UI.class.getResource("main.fxml"));
-        CharacterCard root = new CharacterCard();
-        root.setLoadText("value");
+        TabPane root = FXMLLoader.load(UI.class.getResource("main.fxml"));
         var scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
