@@ -21,7 +21,7 @@ public class CharacterCard extends AnchorPane {
     private ImageView image;
 
 
-    public CharacterCard () {
+    public CharacterCard() {
         FXMLLoader fxmlLoader = new FXMLLoader(CharacterCard.class.getResource("CharacterCard.fxml"));
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(this);
