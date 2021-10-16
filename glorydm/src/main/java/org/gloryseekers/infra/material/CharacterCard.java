@@ -11,6 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 
+/**
+ * The CharacterCard is a Node used for showing character images, it's player name and it's current and max load. 
+ */
 public class CharacterCard extends AnchorPane {
     @FXML 
     private Label nameText;
@@ -20,9 +23,11 @@ public class CharacterCard extends AnchorPane {
 
     @FXML 
     private ImageView image;
-
-
-    public CharacterCard() {
+    
+    /**
+     * Instances a new CharacterCard.
+     */
+    private CharacterCard() { // This is so f** slow, idk if I can just make an static loader or something.
         FXMLLoader fxmlLoader = new FXMLLoader(CharacterCard.class.getResource("CharacterCard.fxml"));
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(this);
@@ -32,6 +37,21 @@ public class CharacterCard extends AnchorPane {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+
+    public CharacterCard(String nameText, String loadText) {
+        this();
+        setNameText(nameText);
+        setLoadText(loadText);
+        setImage(new Image(CharacterCard.class.getResourceAsStream("default.png"),400,400,false,false));
+    }
+
+    public CharacterCard(String nameText, String loadText, Image image) {
+        this();
+        setNameText(nameText);
+        setLoadText(loadText);
+        setImage(image);
     }
 
     public StringProperty nameTextProperty() {
@@ -56,39 +76,6 @@ public class CharacterCard extends AnchorPane {
 
     public void setImage(Image image) {
         this.image.setImage(image);
-    }
-
-    // Ugly workarround, may refactor latter
-
-    public static class Builder {
-
-        String nameText = "";
-        String loadText = "";
-        Image image = null;
-
-        public Builder setNameText(String nameText) {
-            this.nameText = nameText;
-            return this;
-        }
-
-        public Builder setLoadText(String loadText) {
-            this.loadText = loadText;
-            return this;
-        }
-
-        public Builder setImage(Image image) {
-            this.image = image;
-            return this;
-        }
-
-        public CharacterCard build() {
-            CharacterCard card = new CharacterCard();
-            card.setNameText(this.nameText);
-            card.setLoadText(this.loadText);
-            card.setImage(this.image);
-            return card;
-        }
-
     }
 
 }
