@@ -2,6 +2,7 @@ package org.gloryseekers.infra.material;
 
 import java.io.IOException;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,12 +50,45 @@ public class CharacterCard extends AnchorPane {
         loadTextProperty().set(value);
     }
 
-    private ImageView getImageView() { 
-        return this.image;
+    public ObjectProperty<Image> imageProperty() {
+        return this.image.imageProperty();
+    } 
+
+    public void setImage(Image image) {
+        this.image.setImage(image);
     }
 
-    public void  setImage(Image image) {
-        getImageView().setImage(image);
+    // Ugly workarround, may refactor latter
+
+    public static class Builder {
+
+        String nameText = "";
+        String loadText = "";
+        Image image = null;
+
+        public Builder setNameText(String nameText) {
+            this.nameText = nameText;
+            return this;
+        }
+
+        public Builder setLoadText(String loadText) {
+            this.loadText = loadText;
+            return this;
+        }
+
+        public Builder setImage(Image image) {
+            this.image = image;
+            return this;
+        }
+
+        public CharacterCard build() {
+            CharacterCard card = new CharacterCard();
+            card.setNameText(this.nameText);
+            card.setLoadText(this.loadText);
+            card.setImage(this.image);
+            return card;
+        }
+
     }
 
 }
