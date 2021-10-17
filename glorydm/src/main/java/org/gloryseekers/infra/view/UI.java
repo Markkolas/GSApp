@@ -1,11 +1,11 @@
 package org.gloryseekers.infra.view;
 
 import org.gloryseekers.domain.ManagementPort;
-import org.gloryseekers.infra.view.main.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.fxml.FXMLLoader;
 
 public class UI extends Application {
@@ -18,12 +18,12 @@ public class UI extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
-        fxmlLoader.setController(new MainController());
-
-        TabPane root = fxmlLoader.load();
+        FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("Splash.fxml"));
+        fxmlLoader.setController(new SplashController());
+        StackPane root = fxmlLoader.load();
         var scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
 
