@@ -11,21 +11,18 @@ public class Character {
     private float silver;
     private boolean state;
     private String name;
-    private int id;
     
     private final Piece water = new Consumible("Agua", 1, 0, 4);
     private final Piece food = new Consumible("Raciones", 1, 0, 4);
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
-	public Character(short fort, short disc, float silver, boolean state, String name, int id) {
-		super();
+	public Character(short fort, short disc, float silver, boolean state, String name) {
 		this.fort = fort;
 		this.disc = disc;
 		this.silver = silver;
 		this.state = state;
 		this.name = name;
-		this.id = id;
 	}
 
 	//GETTERS AND SETTERS
@@ -69,14 +66,6 @@ public class Character {
 		this.name = name;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public Map<String, Piece> getInventario() {
 		
 		//Lo admito, solo quiero tocaros los cojones, hay una forma mucho más facil de hacer esto
@@ -92,9 +81,5 @@ public class Character {
 
 	public void setInventario(Map<String, Piece> inventario) {
 		this.inventario = inventario;
-	}
-    
-    
-    
-    	
+	}	
 }

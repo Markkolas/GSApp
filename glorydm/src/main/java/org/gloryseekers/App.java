@@ -5,6 +5,8 @@ import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.*;
 
 import org.gloryseekers.domain.model.*;
+import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.*;
 
 public class App{
     public static void main(String[] args) {
