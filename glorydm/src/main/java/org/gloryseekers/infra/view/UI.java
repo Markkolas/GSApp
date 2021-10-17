@@ -22,8 +22,8 @@ public class UI extends Application {
         fxmlLoader.setController(new SplashController());
         StackPane root = fxmlLoader.load();
         var scene = new Scene(root);
-        primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

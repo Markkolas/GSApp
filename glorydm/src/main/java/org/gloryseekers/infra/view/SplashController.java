@@ -9,20 +9,17 @@ import org.gloryseekers.infra.view.main.MainController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class SplashController implements Initializable {
+public class SplashController {
 
     @FXML
     public StackPane splashPane;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+    public void initialize() {
         new SplashScreen().start();
     }
 
@@ -30,27 +27,32 @@ public class SplashController implements Initializable {
 
         @Override
         public void run() {
+            try {
+                Thread.sleep(2000); //IDK MEN :D
+            } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
-                        fxmlLoader.setController(new MainController());
-                        TabPane root = fxmlLoader.load();
-                        var scene = new Scene(root);
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
-                        stage.setMaximized(true);
-                        stage.show();
-                        splashPane.getScene().getWindow().hide();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+            Platform.runLater(() -> {
+               
+                TabPane root = null;
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
+                    fxmlLoader.setController(new MainController());
+                    root = fxmlLoader.load();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
-            });
+                var scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setMaximized(true);
+                stage.show();
+                splashPane.getScene().getWindow().hide();
 
+            });
         }
 
     }
