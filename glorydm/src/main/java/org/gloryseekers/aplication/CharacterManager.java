@@ -24,6 +24,26 @@ public class CharacterManager implements ManagementPort {
 		return true; //for now...
 	}
 	
+	public Character readCharacter(int key) {
+		return characters.get(key);
+	}
+	
+	public boolean modCharacter(short fort, short disc, float silver, String name, int key) {
+		Character c = characters.get(key);
+		
+		c.setFort(fort);
+		c.setDisc(disc);
+		c.setSilver(silver);
+		c.setName(name);
+		
+		return true; //for now...
+	}
+	
+	public boolean rmCharacter(int key) {
+		characters.remove(key);
+		return true; //for now...
+	}
+	
 	//I LIKE IT A LOT
 	public static CharacterManager getInstance(CharacterPort c) {
 		return instance == null ? instance = new CharacterManager(c) : instance;
