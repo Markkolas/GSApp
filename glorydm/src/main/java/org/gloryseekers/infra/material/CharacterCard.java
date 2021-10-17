@@ -1,6 +1,7 @@
 package org.gloryseekers.infra.material;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -15,6 +16,10 @@ import javafx.scene.control.Label;
  * The CharacterCard is a Node used for showing character images, it's player name and it's current and max load. 
  */
 public class CharacterCard extends AnchorPane {
+
+    private final static int IMG_WIDTH = 400;
+    private final static int IMG_HEIGHT = 400;
+
     @FXML 
     private Label nameText;
 
@@ -41,17 +46,21 @@ public class CharacterCard extends AnchorPane {
 
 
     public CharacterCard(String nameText, String loadText) {
-        this();
-        setNameText(nameText);
-        setLoadText(loadText);
-        setImage(new Image(CharacterCard.class.getResourceAsStream("default.png"),400,400,false,false));
+        this(nameText,loadText,CharacterCard.class.getResourceAsStream("default.png"));   
     }
 
-    public CharacterCard(String nameText, String loadText, Image image) {
+    public CharacterCard(String nameText, String loadText, String imageUrl) {
         this();
         setNameText(nameText);
         setLoadText(loadText);
-        setImage(image);
+        setImage(new Image(imageUrl, IMG_WIDTH, IMG_HEIGHT, false, false));
+    }
+
+    public CharacterCard(String nameText, String loadText, InputStream inputStream) {
+        this();
+        setNameText(nameText);
+        setLoadText(loadText);
+        setImage(new Image(inputStream, IMG_WIDTH, IMG_HEIGHT, false, false));
     }
 
     public StringProperty nameTextProperty() {
