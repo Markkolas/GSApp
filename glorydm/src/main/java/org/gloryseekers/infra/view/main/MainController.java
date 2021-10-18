@@ -16,14 +16,17 @@ public class MainController {
     @FXML
     private Tab tabTwo;
 
+    @FXML
+    private FlowPane charactersCardPane;
+
     private ArrayList<CharacterCard> characterCards;
     
     public void initialize() {
-        FlowPane flowPane = new FlowPane();
+        charactersCardPane.setVgap(20);
+        charactersCardPane.setHgap(20);
         this.characterCards = new ArrayList<>();
         mock();
-        flowPane.getChildren().addAll(characterCards);
-        tabOne.contentProperty().set(flowPane);
+        charactersCardPane.getChildren().addAll(characterCards);
     }
 
     //debug

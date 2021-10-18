@@ -17,8 +17,8 @@ import javafx.scene.control.Label;
  */
 public class CharacterCard extends AnchorPane {
 
-    private final static int IMG_WIDTH = 400;
-    private final static int IMG_HEIGHT = 400;
+    private final static int IMG_WIDTH = 800;
+    private final static int IMG_HEIGHT = 800;
 
     @FXML 
     private Label nameText;

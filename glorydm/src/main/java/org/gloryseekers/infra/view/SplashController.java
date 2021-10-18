@@ -1,8 +1,6 @@
 package org.gloryseekers.infra.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import org.gloryseekers.infra.view.main.MainController;
 
@@ -28,7 +26,7 @@ public class SplashController {
         @Override
         public void run() {
             try {
-                Thread.sleep(2000); //IDK MEN :D
+                Thread.sleep(1000); //IDK MEN :D
             } catch (InterruptedException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
