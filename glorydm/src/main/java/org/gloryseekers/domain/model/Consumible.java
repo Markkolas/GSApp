@@ -16,5 +16,12 @@ public class Consumible extends Piece{
 		this.charges = charges;
 	}
 	
+	public int[] getTypeAndAmmountOrCharges() {
+		int[] i = new int[] {1,charges};
+		return i;
+	}
 	
+	public void setAmmountOrCharges(int value) {
+		charges = value;
+	};
 }

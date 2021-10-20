@@ -12,8 +12,8 @@ public class Character {
     private boolean state;
     private String name;
     
-    private final Piece water = new Consumible("Agua", 1, 0, 4);
-    private final Piece food = new Consumible("Raciones", 1, 0, 4);
+    private final Consumible water = new Consumible("Agua", 1, 0, 4);
+    private final Consumible food = new Consumible("Raciones", 1, 0, 4);
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 

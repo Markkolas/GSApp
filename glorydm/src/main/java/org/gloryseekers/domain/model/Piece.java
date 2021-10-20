@@ -31,6 +31,7 @@ public abstract class Piece {
 	public void setValue(int value) {
 		this.value = value;
 	}
-	
+	public abstract int[] getTypeAndAmmountOrCharges(); //Will be of use ->int[0]=> 0=Equip, 1=Consumable, 2=Loot
+	public abstract void setAmmountOrCharges(int value);
 	
 }

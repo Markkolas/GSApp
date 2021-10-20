@@ -18,10 +18,10 @@ public class CharacterManager implements ManagementPort {
 		this.characterPort = characterPort;
 	}
 	
-	public boolean addCharacter(short fort, short disc, float silver, String name) {
+	public int addCharacter(short fort, short disc, float silver, String name) {
 		Character c = new Character(fort, disc, silver, false, name);
 		characters.put(c.hashCode(), c);
-		return true; //for now...
+		return c.hashCode(); //for now...
 	}
 	
 	public Character readCharacter(int key) {
@@ -66,6 +66,7 @@ public class CharacterManager implements ManagementPort {
 		c.setInventario(inv);
 		return true;
 	}
+	
 	//I LIKE IT A LOT
 	public static CharacterManager getInstance(CharacterPort c) {
 		return instance == null ? instance = new CharacterManager(c) : instance;
@@ -73,5 +74,10 @@ public class CharacterManager implements ManagementPort {
 	
 	public static CharacterManager getInstance() {
 		return instance;
+	}
+	
+	
+	public Map<Integer, Character> getCharactersMap(){
+		return characters;
 	}
 }

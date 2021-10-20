@@ -16,5 +16,12 @@ public class Loot extends Piece {
 		this.ammount = ammount;
 	}
 	
+	public int[] getTypeAndAmmountOrCharges() {
+		int[] i = new int[] {2,ammount};
+		return i;
+	}
 	
+	public void setAmmountOrCharges(int value) {
+		ammount = value;
+	};
 }

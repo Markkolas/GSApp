@@ -15,5 +15,14 @@ public class Equip extends Piece{
 	public void setAmmount(int ammount) {
 		this.ammount = ammount;
 	}
+	
+	public int[] getTypeAndAmmountOrCharges() {
+		int[] i = new int[] {0,ammount};
+		return i;
+	}
+	
+	public void setAmmountOrCharges(int value) {
+		ammount = value;
+	};
 		
 }
