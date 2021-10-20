@@ -79,6 +79,10 @@ public class Character {
 		return aux;
 	}
 
+	public Map<String, Piece> getRawInventario() {
+		return inventario;
+	}
+	
 	public void setInventario(Map<String, Piece> inventario) {
 		this.inventario = inventario;
 	}	

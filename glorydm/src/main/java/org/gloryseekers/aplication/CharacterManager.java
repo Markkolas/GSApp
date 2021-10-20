@@ -44,6 +44,28 @@ public class CharacterManager implements ManagementPort {
 		return true; //for now...
 	}
 	
+	public boolean changeCharacter(int key, boolean newState) {
+		characters.get(key).setState(newState);
+		return true; //for now...
+	}
+	
+	public boolean addPiece(int key, Piece p) {
+		Character c = characters.get(key);
+		Map<String, Piece> inv = c.getRawInventario();
+		
+		inv.put(p.getName(), p);
+		c.setInventario(inv); //Unnecesary?
+		return true; //for now...
+	}
+	
+	public boolean rmPiece(int key, Piece p) { //Maybe only the key (String) is necesary
+		Character c = characters.get(key);
+		Map<String, Piece> inv = c.getRawInventario();
+		
+		inv.remove(p.getName(),p);
+		c.setInventario(inv);
+		return true;
+	}
 	//I LIKE IT A LOT
 	public static CharacterManager getInstance(CharacterPort c) {
 		return instance == null ? instance = new CharacterManager(c) : instance;
