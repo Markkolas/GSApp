@@ -13,7 +13,7 @@ public class Character {
     private String name;
     
     private final Consumible water = new Consumible("Agua", 1, 0, 4);
-    private final Consumible food = new Consumible("Raciones", 1, 0, 4);
+    private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
@@ -65,13 +65,29 @@ public class Character {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setWaterCharges(int charges) {
+		water.setAmmountOrCharges(charges);
+	}
+	
+	public int getWaterCharges() {
+		return (int) water.getTypeAndAmmountOrCharges()[1];
+	}
+	
+	public void setRationsCharges(int charges) {
+		rations.setAmmountOrCharges(charges);
+	}
+	
+	public int getRationsCharges() {
+		return (int) rations.getTypeAndAmmountOrCharges()[1];
+	}
 
 	public Map<String, Piece> getInventario() {
 		
 		//Lo admito, solo quiero tocaros los cojones, hay una forma mucho más facil de hacer esto
 		Map<String, Piece> aux = Stream.of(new Object[][] {
 			{water.getName(), water},
-			{food.getName(), food},
+			{rations.getName(), rations},
 		}).collect(Collectors.toMap(data -> (String) data[0], data -> (Piece) data[1]));
 		
 		aux.putAll(inventario); //El agua y raciones nunca estarán en el "inventario" del personaje...
@@ -85,5 +101,5 @@ public class Character {
 	
 	public void setInventario(Map<String, Piece> inventario) {
 		this.inventario = inventario;
-	}	
+	}
 }

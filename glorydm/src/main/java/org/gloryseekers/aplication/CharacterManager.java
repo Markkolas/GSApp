@@ -13,6 +13,7 @@ public class CharacterManager implements ManagementPort {
 	
 	private CharacterPort characterPort;
 	private Map<Integer, Character> characters = new HashMap<Integer, Character>();
+	private float silver = (float) 0;
 	
 	private CharacterManager(CharacterPort characterPort) {
 		this.characterPort = characterPort;
@@ -58,21 +59,50 @@ public class CharacterManager implements ManagementPort {
 	}
 	
 	public boolean rmPiece(int key, Piece p) {
-		Character c = characters.get(key);
-		Map<String, Piece> inv = c.getRawInventario();
+		String name = p.getName();
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
 		
-		inv.remove(p.getName(),p);
+		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
+		else inv.remove(name);
+		
 		return true;
 	}
 	
 	public boolean rmPiece(int key, String name) {
-		Character c = characters.get(key);
-		Map<String, Piece> inv = c.getRawInventario();
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
 		
-		inv.remove(name);
+		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
+		else inv.remove(name);
+		
 		return true;
 	}
 	
+	public boolean doRest(String tipo, Piece w, Piece f) {
+		if(tipo.equals("Estandar")) {
+			
+			for(Character c : characters.values()) {
+				if (c.getState()) {
+					c.setWaterCharges(c.getRationsCharges()-1);
+					c.setRationsCharges(c.getRationsCharges()-1);
+				}
+			}
+		}
+		else if (tipo.equals("Especial")) {
+			
+			for(Character c : characters.values()) {
+				if (c.getState()) {
+					if(w == null) c.setWaterCharges(c.getRationsCharges()-1);
+					else rmPiece(c.hashCode(),w);
+						
+					if(f == null) c.setRationsCharges(c.getRationsCharges()-1);
+					else rmPiece(c.hashCode(),f);
+				}
+			}
+		}
+		return true; //for now...
+	}
 	
 	//I LIKE IT A LOT
 	public static CharacterManager getInstance(CharacterPort c) {
