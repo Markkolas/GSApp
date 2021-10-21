@@ -1,5 +1,8 @@
-package org.gloryseekers.domain.model;
+package org.gloryseekers.domain.model.GSDate;
 
+/**
+ * The class GSDate represents a specific day in the Setting time
+ */
 class GSDate {
 
     /**
@@ -8,7 +11,7 @@ class GSDate {
     private long daysFromDayCero;
 
     /**
-     * Allocates a GSDate objetct and initializes it so that it represents the day one ohf the year 1000.
+     * Allocates a GSDate objetct and initializes it so that it represents the day one of the year 1000.
      */
     public GSDate(){
         this.daysFromDayCero = 1000;
