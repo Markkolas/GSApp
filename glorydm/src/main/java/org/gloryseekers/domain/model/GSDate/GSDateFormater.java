@@ -29,7 +29,30 @@ public class GSDateFormater {
      * @return
      */
     public String format(GSDate date) {
+        return format(date);
+    }
+
+    public String format(GSDate date, GSDateFormat format) {
+        switch(format) {
+            case SHORT:
+                return formatShort(date);
+            case MEDIUM:
+                return formatMedium(date);
+            case LONG: 
+                return formatLong(date);
+        }
+    }
+
+    private String formatShort(GSDate date) {
         return getDay(date) + " " + getMonth(date) + " " + getYear(date);
+    }
+
+    private String formatMedium(GSDate date) {
+        return null;
+    }
+
+    private String formatLong(GSDate date) {
+        return null;
     }
 
     private int getYear(GSDate date) {
