@@ -4,9 +4,9 @@ public abstract class Piece {
 	private String name;
 	//Integer class implements methos to treat ints as unsigned values, but Java dosent implement the structure itself
 	private int weight; 
-	private int value;
+	private float value;
 	
-	protected Piece(String name, int weigth, int value) {
+	protected Piece(String name, int weigth, float value) {
 		this.name = name;
 		this.weight = weigth;
 		this.value = value;
@@ -25,7 +25,7 @@ public abstract class Piece {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	public int getValue() {
+	public float getValue() {
 		return value;
 	}
 	public void setValue(int value) {

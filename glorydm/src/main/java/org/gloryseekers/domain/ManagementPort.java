@@ -14,5 +14,6 @@ public interface ManagementPort {
 	boolean changeCharacter(int key, boolean newState);
 	public boolean addPiece(int key, Piece p);
 	public boolean rmPiece(int key, Piece p);
+	public boolean rmPiece(int key, String name);
 	public Map<Integer, Character> getCharactersMap();
 }

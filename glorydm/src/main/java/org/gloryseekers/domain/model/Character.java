@@ -50,7 +50,7 @@ public class Character {
 		this.silver = silver;
 	}
 
-	public boolean isState() {
+	public boolean getState() {
 		return state;
 	}
 

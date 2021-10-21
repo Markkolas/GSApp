@@ -16,7 +16,7 @@ public class App{
 //        ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager nad give him to UI
 //        ui.start(); //launch app
         
-        /////////////////////////////////////TEST////////////////////////////////////////
+        /////////////////////////////////////ALPHA TEST////////////////////////////////////////
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         
         //Add characters Test and read characters test
@@ -33,7 +33,30 @@ public class App{
         System.out.println(c.getInventario().toString());
         
         Piece agua = c.getInventario().get("Agua");
-        System.out.println(agua.getName()+" "+agua.getValue()+" "+agua.getWeight()+" "+agua.getTypeAndAmmountOrCharges()[1]);
+        System.out.println(agua.getName()+" "+agua.getValue()+" "+agua.getWeight()+" "+agua.getTypeAndAmmountOrCharges()[1]+"\n");
+        
+        //Modify characters and equipment
+        c.setSilver(c.getSilver()-(float)1.6);
+        System.out.println(c.getSilver()+"\n"); //Formatting will prob be necesary...
+        Piece p = new Equip("Escudo", 2, (float)10.0, 1);
+        manager.addPiece(key4, p); //Add shield
+        System.out.println(c.getInventario().toString());
+        manager.rmPiece(key4, "Escudo"); //Remove the shield
+        System.out.println(c.getInventario().toString());
+        
+        
+        //Delete character
+        manager.rmCharacter(key1);
+        list = manager.getCharactersMap().toString();
+        System.out.println(list+"\n");
+        
+        //State changing test
+        c.setState(true);
+        System.out.println("You should see true -> "+c.getState());
+        c.setState(false);
+        System.out.println("You should see false -> "+c.getState());
+        
+        System.out.println("CRUD alpha version: OK\n");
         
         
     }
