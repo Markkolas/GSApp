@@ -13,8 +13,8 @@ class GSDate {
     /**
      * Allocates a GSDate objetct and initializes it so that it represents the day one of the year 1000.
      */
-    public GSDate(){
-        this.daysFromDayCero = 1000;
+    public GSDate() {
+        this.daysFromDayCero = 360000;
     }
 
     private GSDate(long daysFromDayCero) {
