@@ -44,7 +44,6 @@ public class App{
         manager.rmPiece(key4, "Escudo"); //Remove the shield
         System.out.println(c.getInventario().toString());
         
-        
         //Delete character
         manager.rmCharacter(key1);
         list = manager.getCharactersMap().toString();
@@ -57,8 +56,5 @@ public class App{
         System.out.println("You should see false -> "+c.getState());
         
         System.out.println("CRUD alpha version: OK\n");
-        
-        
     }
-
 }

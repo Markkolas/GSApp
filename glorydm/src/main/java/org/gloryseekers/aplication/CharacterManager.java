@@ -6,6 +6,8 @@ import org.gloryseekers.domain.model.Character;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CharacterManager implements ManagementPort {
 
@@ -13,7 +15,7 @@ public class CharacterManager implements ManagementPort {
 	
 	private CharacterPort characterPort;
 	private Map<Integer, Character> characters = new HashMap<Integer, Character>();
-	private float silver = (float) 0;
+	private float savedSilver = (float) 0;
 	
 	private CharacterManager(CharacterPort characterPort) {
 		this.characterPort = characterPort;
@@ -59,12 +61,11 @@ public class CharacterManager implements ManagementPort {
 	}
 	
 	public boolean rmPiece(int key, Piece p) {
-		String name = p.getName();
 		Map<String, Piece> inv = characters.get(key).getRawInventario();
-		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
+		int[] info = p.getTypeAndAmmountOrCharges();
 		
-		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
-		else inv.remove(name);
+		if(info[0]!=1 && info[1]>1) inv.get(p.getName()).setAmmountOrCharges(info[1]-1);
+		else inv.remove(p.getName());
 		
 		return true;
 	}
@@ -80,6 +81,7 @@ public class CharacterManager implements ManagementPort {
 	}
 	
 	public boolean doRest(String tipo, Piece w, Piece f) {
+		/* PROBABLY UNNECESARRY
 		if(tipo.equals("Estandar")) {
 			
 			for(Character c : characters.values()) {
@@ -88,18 +90,53 @@ public class CharacterManager implements ManagementPort {
 					c.setRationsCharges(c.getRationsCharges()-1);
 				}
 			}
+			//TODO: Add one to calendar
 		}
-		else if (tipo.equals("Especial")) {
+		*/
+		if (tipo.equals("Corto")) {
 			
 			for(Character c : characters.values()) {
 				if (c.getState()) {
 					if(w == null) c.setWaterCharges(c.getRationsCharges()-1);
-					else rmPiece(c.hashCode(),w);
+					else rmPiece(c.hashCode(), w);
 						
 					if(f == null) c.setRationsCharges(c.getRationsCharges()-1);
-					else rmPiece(c.hashCode(),f);
+					else rmPiece(c.hashCode(), f);
 				}
 			}
+			//TODO:Add one to calendar
+		}
+		else if (tipo.equals("Largo")) {
+			float newSilver, aux=0;
+			List<Short> listDisc = new ArrayList<Short>();
+			int[] info;
+			
+			for(Character c : characters.values()) {
+				if(c.getState()) {
+					listDisc.add(c.getDisc());
+					newSilver = c.getSilver();
+					
+					for(Piece p : c.getInventario().values()) {
+						info = p.getTypeAndAmmountOrCharges();
+						
+						if(info[0] == 1) { //Its Consumible
+							p.setAmmountOrCharges(4);
+						}
+						else if(info[0] == 2) { //Its Loot
+							while(info[1] >= 1) {
+								newSilver += p.getValue();
+								rmPiece(c.hashCode(), p);
+								info[1]--;
+							}
+						}
+					}
+					aux += newSilver;
+					c.setSilver(0);
+				}
+			}
+			
+			for(short disc : listDisc) savedSilver += aux*((float)0.05+(float)(0.02*disc));
+			
 		}
 		return true; //for now...
 	}
