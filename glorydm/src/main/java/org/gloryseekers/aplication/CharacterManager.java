@@ -53,10 +53,17 @@ public class CharacterManager implements ManagementPort {
 	}
 	
 	public boolean addPiece(int key, Piece p) {
-		Character c = characters.get(key);
-		Map<String, Piece> inv = c.getRawInventario();
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = p.getTypeAndAmmountOrCharges();
+		
+		if(inv.containsKey(p.getName()) && info[0] != 1) {
+			Piece inInv = inv.get(p.getName());
+			int ammount = inInv.getTypeAndAmmountOrCharges()[1];
+			inInv.setAmmountOrCharges(info[1]+ammount);
+		}
 		
 		inv.put(p.getName(), p);
+		
 		return true; //for now...
 	}
 	
