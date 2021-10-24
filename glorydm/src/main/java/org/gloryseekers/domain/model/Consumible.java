@@ -3,7 +3,7 @@ package org.gloryseekers.domain.model;
 public class Consumible extends Piece{
 	private int charges;
 	
-	public Consumible(String name, int weigth, int value, int charges){
+	public Consumible(String name, int weigth, float value, int charges){
 		super(name, weigth, value);
 		this.charges = charges;
 	}

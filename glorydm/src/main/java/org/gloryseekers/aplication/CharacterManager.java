@@ -65,7 +65,7 @@ public class CharacterManager implements ManagementPort {
 		int[] info = p.getTypeAndAmmountOrCharges();
 		
 		if(info[0]!=1 && info[1]>1) inv.get(p.getName()).setAmmountOrCharges(info[1]-1);
-		else inv.remove(p.getName());
+		else if(inv.remove(p.getName())==null) return false;
 		
 		return true;
 	}
@@ -75,70 +75,60 @@ public class CharacterManager implements ManagementPort {
 		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
 		
 		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
-		else inv.remove(name);
+		else if(inv.remove(name)==null) return false;
 		
 		return true;
 	}
 	
-	public boolean doRest(String tipo, Piece w, Piece f) {
-		/* PROBABLY UNNECESARRY
-		if(tipo.equals("Estandar")) {
-			
-			for(Character c : characters.values()) {
-				if (c.getState()) {
-					c.setWaterCharges(c.getRationsCharges()-1);
-					c.setRationsCharges(c.getRationsCharges()-1);
-				}
-			}
-			//TODO: Add one to calendar
-		}
-		*/
-		if (tipo.equals("Corto")) {
-			
-			for(Character c : characters.values()) {
-				if (c.getState()) {
-					if(w == null) c.setWaterCharges(c.getRationsCharges()-1);
-					else rmPiece(c.hashCode(), w);
-						
-					if(f == null) c.setRationsCharges(c.getRationsCharges()-1);
-					else rmPiece(c.hashCode(), f);
-				}
-			}
-			//TODO:Add one to calendar
-		}
-		else if (tipo.equals("Largo")) {
-			float newSilver, aux=0;
-			List<Short> listDisc = new ArrayList<Short>();
-			int[] info;
-			
-			for(Character c : characters.values()) {
-				if(c.getState()) {
-					listDisc.add(c.getDisc());
-					newSilver = c.getSilver();
+	public boolean doShortRest(Piece w, Piece f) {
+		boolean foodUsed=false, drinkUsed=false;
+		
+		for(Character c : characters.values()) {
+			if (c.getState()) {
+				if(w == null) c.setWaterCharges(c.getRationsCharges()-1);
+				else if (!drinkUsed && rmPiece(c.hashCode(), w)) drinkUsed = true;
 					
-					for(Piece p : c.getInventario().values()) {
-						info = p.getTypeAndAmmountOrCharges();
-						
-						if(info[0] == 1) { //Its Consumible
-							p.setAmmountOrCharges(4);
-						}
-						else if(info[0] == 2) { //Its Loot
-							while(info[1] >= 1) {
-								newSilver += p.getValue();
-								rmPiece(c.hashCode(), p);
-								info[1]--;
-							}
+				if(f == null) c.setRationsCharges(c.getRationsCharges()-1);
+				else if(!foodUsed && rmPiece(c.hashCode(), f)) foodUsed = true;
+			}
+		}
+		//TODO:Add one to calendar
+		return true; //for now...
+	}
+	
+	public boolean doLongRest() {
+		float newSilver, aux=0;
+		List<Short> listDisc = new ArrayList<Short>();
+		int[] info;
+		
+		for(Character c : characters.values()) {
+			if(c.getState()) {
+				listDisc.add(c.getDisc());
+				newSilver = c.getSilver();
+				
+				for(Piece p : c.getInventario().values()) {
+					info = p.getTypeAndAmmountOrCharges();
+					
+					if(info[0] == 1) { //Its Consumible
+						p.setAmmountOrCharges(4);
+					}
+					else if(info[0] == 2) { //Its Loot
+						while(info[1] >= 1) {
+							newSilver += p.getValue();
+							rmPiece(c.hashCode(), p);
+							info[1]--;
 						}
 					}
-					aux += newSilver;
-					c.setSilver(0);
 				}
+				aux += newSilver;
+				c.setSilver(0);
 			}
-			
-			for(short disc : listDisc) savedSilver += aux*((float)0.05+(float)(0.02*disc));
-			
 		}
-		return true; //for now...
+		
+		for(short disc : listDisc) savedSilver += aux*((float)0.05+(float)(0.02*disc));
+		//TODO: Add 5 to calendar logic
+		
+		return true;//for now...
 	}
 	
 	//I LIKE IT A LOT
@@ -153,5 +143,9 @@ public class CharacterManager implements ManagementPort {
 	
 	public Map<Integer, Character> getCharactersMap(){
 		return characters;
+	}
+	
+	public float getSavedSilver() {
+		return savedSilver;
 	}
 }

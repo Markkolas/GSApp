@@ -12,8 +12,11 @@ public interface ManagementPort {
 	boolean modCharacter(short fort, short disc, float silver, String name, int key);
 	boolean rmCharacter(int key);
 	boolean changeCharacter(int key, boolean newState);
-	public boolean addPiece(int key, Piece p);
-	public boolean rmPiece(int key, Piece p);
-	public boolean rmPiece(int key, String name);
-	public Map<Integer, Character> getCharactersMap();
+	boolean addPiece(int key, Piece p);
+	boolean rmPiece(int key, Piece p);
+	boolean rmPiece(int key, String name);
+	boolean doShortRest(Piece w, Piece f);
+	boolean doLongRest();
+	Map<Integer, Character> getCharactersMap();
+	float getSavedSilver();
 }

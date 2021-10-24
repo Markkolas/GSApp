@@ -56,5 +56,40 @@ public class App{
         System.out.println("You should see false -> "+c.getState());
         
         System.out.println("CRUD alpha version: OK\n");
+        
+        //Short rest
+        Character c1 = manager.getCharactersMap().get(key2);
+        Character c2 = manager.getCharactersMap().get(key3);
+        c1.setState(true);
+        c2.setState(true);
+        
+        Piece platos = new Loot("Plato de plata", 3, (float)30.0, 3);
+        Piece copas = new Loot("Copa de plata", 2, (float)10.0, 2);
+        manager.addPiece(key2, platos);
+        manager.addPiece(key3, copas);
+        
+        manager.doShortRest(null, null);
+        System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
+        		c2.getWaterCharges()+" "+c2.getRationsCharges());
+        
+        Piece conejo = new Loot("Conejo",1, (float)6.4, 1);
+        Piece pollo = new Loot("Pollo",1, (float)2.3, 1);
+        manager.addPiece(key2, p);
+        manager.addPiece(key2, conejo);
+        manager.addPiece(key3, pollo);
+        manager.doShortRest(null, conejo);
+        System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
+        		c2.getWaterCharges()+" "+c2.getRationsCharges());
+        
+        System.out.println("Inventory lists: "+c1.getInventario().toString()+"\n"+c2.getInventario().toString()+"\n");
+        
+        //Long rest
+        manager.doLongRest();
+        System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
+        		c2.getWaterCharges()+" "+c2.getRationsCharges());
+        System.out.println("Inventory lists: "+c1.getInventario().toString()+"\n"+c2.getInventario().toString()+"\n");
+        System.out.println("Current savings: "+manager.getSavedSilver()+"\n");
+        
+        System.out.println("PreAlpha rest logic: OK\n");
     }
 }
