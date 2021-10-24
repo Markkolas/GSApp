@@ -40,10 +40,10 @@ public class App{
         System.out.println(c.getSilver()+"\n"); //Formatting will prob be necesary...
         Piece p = new Equip("Escudo", 2, (float)10.0, 1);
         manager.addPiece(key4, p); //Add shield
-        manager.addPiece(key4, p);
-        System.out.println("Inventory list: "+c.getInventario().toString());
+        manager.addPiece(key4, p); //Add another to test add and load logic
+        System.out.println("Inventory list: "+c.getInventario().toString()+"\nThe load is: "+c.getLoad());
         manager.rmPiece(key4, "Escudo"); //Remove the shield
-        System.out.println("Inventory list: "+c.getInventario().toString());
+        System.out.println("Inventory list: "+c.getInventario().toString()+"\nThe load is: "+c.getLoad());
         
         //Delete character
         manager.rmCharacter(key1);

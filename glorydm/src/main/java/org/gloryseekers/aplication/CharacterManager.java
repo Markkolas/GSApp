@@ -64,6 +64,8 @@ public class CharacterManager implements ManagementPort {
 		
 		inv.put(p.getName(), p);
 		
+		characters.get(key).updateLoad();
+		
 		return true; //for now...
 	}
 	
@@ -74,6 +76,8 @@ public class CharacterManager implements ManagementPort {
 		if(info[0]!=1 && info[1]>1) inv.get(p.getName()).setAmmountOrCharges(info[1]-1);
 		else if(inv.remove(p.getName())==null) return false;
 		
+		characters.get(key).updateLoad();
+		
 		return true;
 	}
 	
@@ -83,6 +87,8 @@ public class CharacterManager implements ManagementPort {
 		
 		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
 		else if(inv.remove(name)==null) return false;
+		
+		characters.get(key).updateLoad();
 		
 		return true;
 	}

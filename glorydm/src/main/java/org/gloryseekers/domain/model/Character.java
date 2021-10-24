@@ -11,6 +11,7 @@ public class Character {
     private float silver;
     private boolean state;
     private String name;
+    private short load = 2;
     
     private final Consumible water = new Consumible("Agua", 1, 0, 4);
     private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
@@ -101,5 +102,19 @@ public class Character {
 	
 	public void setInventario(Map<String, Piece> inventario) {
 		this.inventario = inventario;
+	}
+	
+	public void updateLoad() {
+		load=0;
+		for(Piece p : getInventario().values()) {
+			int[] info = p.getTypeAndAmmountOrCharges();
+			
+			if(info[0] !=1) load += p.getWeight()*info[1];
+			else load += p.getWeight();
+		}
+	}
+	
+	public short getLoad() {
+		return load;
 	}
 }
