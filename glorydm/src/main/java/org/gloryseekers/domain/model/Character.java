@@ -11,7 +11,7 @@ public class Character {
     private float silver;
     private boolean state;
     private String name;
-    private short load = 2;
+    private short load;
     
     private final Consumible water = new Consumible("Agua", 1, 0, 4);
     private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
@@ -24,6 +24,7 @@ public class Character {
 		this.silver = silver;
 		this.state = state;
 		this.name = name;
+		this.load = 2;
 	}
 
 	//GETTERS AND SETTERS
