@@ -69,26 +69,23 @@ public class App{
         manager.addPiece(key2, platos);
         manager.addPiece(key3, copas);
         
-        manager.doShortRest(null, null);
+        manager.doShortRest();
         System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
         		c2.getWaterCharges()+" "+c2.getRationsCharges());
         
-        Piece conejo = new Loot("Conejo",1, (float)6.4, 1);
-        Piece pollo = new Loot("Pollo",1, (float)2.3, 1);
         manager.addPiece(key2, p);
-        manager.addPiece(key2, conejo);
-        manager.addPiece(key3, pollo);
-        manager.doShortRest(null, conejo);
         System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
         		c2.getWaterCharges()+" "+c2.getRationsCharges());
         
         System.out.println("Inventory lists: "+c1.getInventario().toString()+"\n"+c2.getInventario().toString()+"\n");
         
         //Long rest
+        c1.setRationsCharges(9);
         manager.doLongRest();
-        System.out.println("Current water and ration charges:"+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
+        System.out.println("Current water and ration charges: "+c1.getWaterCharges()+" "+c1.getRationsCharges()+"    "+
         		c2.getWaterCharges()+" "+c2.getRationsCharges());
         System.out.println("Inventory lists: "+c1.getInventario().toString()+"\n"+c2.getInventario().toString()+"\n");
+        System.out.println("Current loads: "+c1.getLoad()+" "+c2.getLoad());
         System.out.println("Current savings: "+manager.getSavedSilver()+"\n");
         
         System.out.println("PreAlpha rest logic: OK\n");

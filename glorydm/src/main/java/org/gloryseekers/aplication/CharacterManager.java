@@ -93,16 +93,11 @@ public class CharacterManager implements ManagementPort {
 		return true;
 	}
 	
-	public boolean doShortRest(Piece w, Piece f) {
-		boolean foodUsed=false, drinkUsed=false;
-		
+	public boolean doShortRest() {
 		for(Character c : characters.values()) {
 			if (c.getState()) {
-				if(w == null) c.setWaterCharges(c.getRationsCharges()-1);
-				else if (!drinkUsed && rmPiece(c.hashCode(), w)) drinkUsed = true;
-					
-				if(f == null) c.setRationsCharges(c.getRationsCharges()-1);
-				else if(!foodUsed && rmPiece(c.hashCode(), f)) foodUsed = true;
+				c.setWaterCharges(c.getRationsCharges()-1);
+				c.setRationsCharges(c.getRationsCharges()-1);
 			}
 		}
 		//TODO:Add one to calendar
@@ -122,7 +117,7 @@ public class CharacterManager implements ManagementPort {
 				for(Piece p : c.getInventario().values()) {
 					info = p.getTypeAndAmmountOrCharges();
 					
-					if(info[0] == 1) { //Its Consumible
+					if(info[0] == 1 && info[1] < 4) { //Its Consumible AND has to be recharged
 						p.setAmmountOrCharges(4);
 					}
 					else if(info[0] == 2) { //Its Loot

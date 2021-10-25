@@ -14,5 +14,7 @@ public class Consumible extends Piece{
 	
 	public void setAmmountOrCharges(int value) {
 		charges = value;
-	};
+		if(value % 4 != 0) super.setWeight((value/4)+1);
+		else super.setWeight(value/4);
+	}
 }

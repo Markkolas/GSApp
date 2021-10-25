@@ -15,7 +15,7 @@ public interface ManagementPort {
 	boolean addPiece(int key, Piece p);
 	boolean rmPiece(int key, Piece p);
 	boolean rmPiece(int key, String name);
-	boolean doShortRest(Piece w, Piece f);
+	boolean doShortRest();
 	boolean doLongRest();
 	Map<Integer, Character> getCharactersMap();
 	float getSavedSilver();
