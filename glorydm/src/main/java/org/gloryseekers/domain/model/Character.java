@@ -1,6 +1,7 @@
 package org.gloryseekers.domain.model;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.HashMap;
@@ -10,7 +11,8 @@ public class Character {
     private short disc;
     private float silver;
     private boolean state;
-    private String name;
+    private String characterName;
+    private String ownerName;
     private short load;
     
     private final Consumible water = new Consumible("Agua", 1, 0, 4);
@@ -18,12 +20,13 @@ public class Character {
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
-	public Character(short fort, short disc, float silver, boolean state, String name) {
+	public Character(short fort, short disc, float silver, boolean state, String characterName, String ownerName) {
 		this.fort = fort;
 		this.disc = disc;
 		this.silver = silver;
 		this.state = state;
-		this.name = name;
+		this.characterName = characterName;
+		this.ownerName = ownerName;
 		this.load = 2;
 	}
 
@@ -60,12 +63,20 @@ public class Character {
 		this.state = state;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String name) {
+		this.ownerName = name;
+	}
+	
 	public String getName() {
-		return name;
+		return characterName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.characterName = name;
 	}
 	
 	public void setWaterCharges(int charges) {

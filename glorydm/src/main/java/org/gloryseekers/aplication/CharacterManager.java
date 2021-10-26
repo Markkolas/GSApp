@@ -21,8 +21,8 @@ public class CharacterManager implements ManagementPort {
 		this.characterPort = characterPort;
 	}
 	
-	public int addCharacter(short fort, short disc, float silver, String name) {
-		Character c = new Character(fort, disc, silver, false, name);
+	public int addCharacter(short fort, short disc, float silver, String charName, String ownerName) {
+		Character c = new Character(fort, disc, silver, false, charName, ownerName);
 		characters.put(c.hashCode(), c);
 		return c.hashCode(); //for now...
 	}
@@ -31,13 +31,14 @@ public class CharacterManager implements ManagementPort {
 		return characters.get(key);
 	}
 	
-	public boolean modCharacter(short fort, short disc, float silver, String name, int key) {
+	public boolean modCharacter(short fort, short disc, float silver, String charName, String ownerName, int key) {
 		Character c = characters.get(key);
 		
 		c.setFort(fort);
 		c.setDisc(disc);
 		c.setSilver(silver);
-		c.setName(name);
+		c.setName(charName);
+		c.setOwnerName(ownerName);
 		
 		return true; //for now...
 	}

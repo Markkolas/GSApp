@@ -8,6 +8,8 @@ import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.domain.model.*;
 
+import java.io.IOException;
+
 public class App{
     public static void main(String[] args) {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
@@ -20,10 +22,10 @@ public class App{
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         
         //Add characters Test and read characters test
-        int key1 = manager.addCharacter((short) 2, (short) 1, (float) 23.56, "Puto");
-        int key2 = manager.addCharacter((short) 1, (short) 3, (float) 96, "Juan");
-        int key3 = manager.addCharacter((short) -2, (short) 1, (float) 46.5, "Yoyi");
-        int key4 = manager.addCharacter((short) 2, (short) -1, (float) 2.4, "Pato");
+        int key1 = manager.addCharacter((short) 2, (short) 1, (float) 23.56, "Puto", "Crotolamo");
+        int key2 = manager.addCharacter((short) 1, (short) 3, (float) 96, "Juan", "Ramon Y Cajal");
+        int key3 = manager.addCharacter((short) -2, (short) 1, (float) 46.5, "Yoyi", "El Yoyis");
+        int key4 = manager.addCharacter((short) 2, (short) -1, (float) 2.4, "Pato", "Una Paloma");
         
         String list = manager.getCharactersMap().toString();
         System.out.println(list+"\n");
@@ -89,5 +91,19 @@ public class App{
         System.out.println("Current savings: "+manager.getSavedSilver()+"\n");
         
         System.out.println("PreAlpha rest logic: OK\n");
+        
+        //Storagement test
+        try {
+        	storageManager.storeCharacter(c1);
+        	System.out.println("Saved: "+c1.toString()+"\nWith name and owner: "+c1.getName()+" "+c1.getOwnerName()+
+        			"\nAttr: "+c1.getDisc()+" "+c1.getFort()+"\nSilver: "+c1.getSilver()+"\nAnd Inventory:"+c1.getInventario().toString());
+        	Character c1Loaded = storageManager.loadCharacter("Ramon Y Cajal_Juan.xml");
+        	System.out.println("\nLoaded: "+c1Loaded.toString()+"\nWith name and owner: "+c1Loaded.getName()+c1Loaded.getOwnerName()+
+        			"\nAttr: "+c1Loaded.getDisc()+" "+c1Loaded.getFort()+"\nSilver: "+c1Loaded.getSilver()+"\nAnd Inventory:"+c1Loaded.getInventario().toString());
+        	System.out.println("\nSeems OK!!!!");
+        }catch(IOException e) {
+        	System.out.print("Ouch!!!! -> ");
+        	e.printStackTrace();
+        }
     }
 }
