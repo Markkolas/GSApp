@@ -17,15 +17,8 @@ public class SplashController {
     @FXML
     public StackPane splashPane;
 
-    //just to avoid making ManagementPort a goblal variable
-    private UI ui;
-
     public void initialize() {
         new SplashScreen().start();
-    }
-
-    public SplashController(UI ui) {
-        this.ui = ui;
     }
 
     class SplashScreen extends Thread {
@@ -44,7 +37,7 @@ public class SplashController {
                 TabPane root = null;
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
-                    fxmlLoader.setController(new MainController(ui));
+                    fxmlLoader.setController(new MainController());
                     root = fxmlLoader.load();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block

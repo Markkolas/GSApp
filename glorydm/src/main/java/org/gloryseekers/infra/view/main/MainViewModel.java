@@ -1,20 +1,17 @@
 package org.gloryseekers.infra.view.main;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
-import org.gloryseekers.domain.model.gsdate.GSDate;
-import org.gloryseekers.domain.model.gsdate.GSDateFormater;
+
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -27,10 +24,9 @@ public class MainViewModel {
 
     private MainController controller;
 
-
-    public MainViewModel(MainController controller, ManagementPort managementPort) {
+    public MainViewModel(MainController controller) {
         this.controller = controller;
-        this.managementPort = managementPort;
+        this.managementPort = CharacterManager.getInstance();
         
         dateService.setOnFailed(new EventHandler<WorkerStateEvent>() {
 
@@ -40,10 +36,11 @@ public class MainViewModel {
 
                     @Override
                     public void run() {
+                        event.getSource().getException().printStackTrace();
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText(null);
                         alert.setTitle("ERROR");
-                        alert.setContentText("La fecha no carga correctamente \n " + event.getSource().getException().toString());
+                        alert.setContentText("La fecha no carga correctamente \n" + event.getSource().getException().toString());
                         alert.show();
                         
                     }
@@ -72,6 +69,7 @@ public class MainViewModel {
 
                     @Override
                     public void run() {
+                        event.getSource().getException().printStackTrace();
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText(null);
                         alert.setTitle("ERROR");

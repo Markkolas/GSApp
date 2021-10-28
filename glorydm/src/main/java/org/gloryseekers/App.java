@@ -11,12 +11,11 @@ import org.gloryseekers.domain.model.*;
 
 import java.io.IOException;
 
-public class App{
+public class App {
     public static void main(String[] args) {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
-        final UI ui = new UI(); //load graphical interface
-        
-        ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager and pass it to UI.
+        final ManagementPort managementPort = CharacterManager.getInstance(storageManager);
+        final UI ui = new UI(); //load graphical interface    
         ui.start(); //launch app
         
         /*

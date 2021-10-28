@@ -43,6 +43,7 @@ public class GSDateFormater {
             case LONG: 
                 return formatLong(date);
         }
+        return null;
     }
 
     private String formatShort(GSDate date) {

@@ -36,17 +36,12 @@ public class MainController {
     private ArrayList<CharacterCard> characterCards;
 
 
-    
-    public MainController(UI ui) {
-        this.mainViewModel = new MainViewModel(this,ui.getManagementPort());
-    }
-
     public void initialize() {
         charactersCardPane.setVgap(20);
         charactersCardPane.setHgap(20);
         this.characterCards = new ArrayList<>();
+        this.mainViewModel = new MainViewModel(this);
         calendarButton.textProperty().bind(mainViewModel.getCurrentGameDateProperty());
-
     }
 
     @FXML
