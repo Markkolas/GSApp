@@ -14,12 +14,12 @@ public class CharacterManager implements ManagementPort {
 
 	private static CharacterManager instance = null;
 	
-	private CharacterPort storageManager;
+	private CharacterPort characterPort;
 	private Map<Integer, Character> characters = new HashMap<Integer, Character>();
 	private float savedSilver = (float) 0;
 	
 	private CharacterManager(CharacterPort characterPort) {
-		this.storageManager = storageManager;
+		this.characterPort = characterPort;
 	}
 	
 	public int addCharacter(short fort, short disc, float silver, String charName, String ownerName) {
@@ -161,7 +161,7 @@ public class CharacterManager implements ManagementPort {
 	
 	public Character loadCharacter(String path) {
 		try {
-			return storageManager.loadCharacter(path);
+			return characterPort.loadCharacter(path);
 		}
 		catch(IOException e) {
 			return null;
@@ -170,7 +170,7 @@ public class CharacterManager implements ManagementPort {
 	
 	public boolean storeCharacter(Character c) {
 		try {
-			storageManager.storeCharacter(c);
+			characterPort.storeCharacter(c);
 			return true;
 		}
 		catch(IOException e) {
