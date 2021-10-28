@@ -3,17 +3,14 @@ package org.gloryseekers.infra.view.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gloryseekers.domain.CharacterPort;
-import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.infra.material.CharacterCard;
-import org.gloryseekers.infra.view.UI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.control.Button;
 
 public class MainController {
 
@@ -35,8 +32,12 @@ public class MainController {
 
     private ArrayList<CharacterCard> characterCards;
 
+    private CharacterCard addNewCharacterCard = new CharacterCard("", "", MainController.class.getResourceAsStream("newuser.png"));
 
     public void initialize() {
+        addNewCharacterCard.setOnMouseClicked((c)->{
+            System.out.println("No, te j0des");
+        });
         charactersCardPane.setVgap(20);
         charactersCardPane.setHgap(20);
         this.characterCards = new ArrayList<>();
@@ -56,5 +57,6 @@ public class MainController {
         });
         charactersCardPane.getChildren().clear();
         charactersCardPane.getChildren().addAll(characterCards);
+        charactersCardPane.getChildren().add(this.addNewCharacterCard);
     }
 }
