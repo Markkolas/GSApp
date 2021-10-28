@@ -42,8 +42,6 @@ public class GSDateFormater {
                 return formatMedium(date);
             case LONG: 
                 return formatLong(date);
-            default:
-            	return null;
         }
     }
 
