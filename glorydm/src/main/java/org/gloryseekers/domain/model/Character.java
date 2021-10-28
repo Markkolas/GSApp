@@ -1,6 +1,7 @@
 package org.gloryseekers.domain.model;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.HashMap;
@@ -10,19 +11,23 @@ public class Character {
     private short disc;
     private float silver;
     private boolean state;
-    private String name;
+    private String characterName;
+    private String ownerName;
+    private short load;
     
     private final Consumible water = new Consumible("Agua", 1, 0, 4);
-    private final Consumible food = new Consumible("Raciones", 1, 0, 4);
+    private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
-	public Character(short fort, short disc, float silver, boolean state, String name) {
+	public Character(short fort, short disc, float silver, boolean state, String characterName, String ownerName) {
 		this.fort = fort;
 		this.disc = disc;
 		this.silver = silver;
 		this.state = state;
-		this.name = name;
+		this.characterName = characterName;
+		this.ownerName = ownerName;
+		this.load = 2;
 	}
 
 	//GETTERS AND SETTERS
@@ -50,7 +55,7 @@ public class Character {
 		this.silver = silver;
 	}
 
-	public boolean isState() {
+	public boolean getState() {
 		return state;
 	}
 
@@ -58,12 +63,36 @@ public class Character {
 		this.state = state;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String name) {
+		this.ownerName = name;
+	}
+	
 	public String getName() {
-		return name;
+		return characterName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.characterName = name;
+	}
+	
+	public void setWaterCharges(int charges) {
+		water.setAmmountOrCharges(charges);
+	}
+	
+	public int getWaterCharges() {
+		return (int) water.getTypeAndAmmountOrCharges()[1];
+	}
+	
+	public void setRationsCharges(int charges) {
+		rations.setAmmountOrCharges(charges);
+	}
+	
+	public int getRationsCharges() {
+		return (int) rations.getTypeAndAmmountOrCharges()[1];
 	}
 
 	public Map<String, Piece> getInventario() {
@@ -71,7 +100,7 @@ public class Character {
 		//Lo admito, solo quiero tocaros los cojones, hay una forma mucho más facil de hacer esto
 		Map<String, Piece> aux = Stream.of(new Object[][] {
 			{water.getName(), water},
-			{food.getName(), food},
+			{rations.getName(), rations},
 		}).collect(Collectors.toMap(data -> (String) data[0], data -> (Piece) data[1]));
 		
 		aux.putAll(inventario); //El agua y raciones nunca estarán en el "inventario" del personaje...
@@ -85,5 +114,19 @@ public class Character {
 	
 	public void setInventario(Map<String, Piece> inventario) {
 		this.inventario = inventario;
-	}	
+	}
+	
+	public void updateLoad() {
+		load=0;
+		for(Piece p : getInventario().values()) {
+			int[] info = p.getTypeAndAmmountOrCharges();
+			
+			if(info[0] !=1) load += p.getWeight()*info[1];
+			else load += p.getWeight();
+		}
+	}
+	
+	public short getLoad() {
+		return load;
+	}
 }

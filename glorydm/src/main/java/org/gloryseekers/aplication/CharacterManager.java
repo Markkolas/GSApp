@@ -6,6 +6,8 @@ import org.gloryseekers.domain.model.Character;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CharacterManager implements ManagementPort {
 
@@ -13,13 +15,14 @@ public class CharacterManager implements ManagementPort {
 	
 	private CharacterPort characterPort;
 	private Map<Integer, Character> characters = new HashMap<Integer, Character>();
+	private float savedSilver = (float) 0;
 	
 	private CharacterManager(CharacterPort characterPort) {
 		this.characterPort = characterPort;
 	}
 	
-	public int addCharacter(short fort, short disc, float silver, String name) {
-		Character c = new Character(fort, disc, silver, false, name);
+	public int addCharacter(short fort, short disc, float silver, String charName, String ownerName) {
+		Character c = new Character(fort, disc, silver, false, charName, ownerName);
 		characters.put(c.hashCode(), c);
 		return c.hashCode(); //for now...
 	}
@@ -28,13 +31,14 @@ public class CharacterManager implements ManagementPort {
 		return characters.get(key);
 	}
 	
-	public boolean modCharacter(short fort, short disc, float silver, String name, int key) {
+	public boolean modCharacter(short fort, short disc, float silver, String charName, String ownerName, int key) {
 		Character c = characters.get(key);
 		
 		c.setFort(fort);
 		c.setDisc(disc);
 		c.setSilver(silver);
-		c.setName(name);
+		c.setName(charName);
+		c.setOwnerName(ownerName);
 		
 		return true; //for now...
 	}
@@ -50,21 +54,90 @@ public class CharacterManager implements ManagementPort {
 	}
 	
 	public boolean addPiece(int key, Piece p) {
-		Character c = characters.get(key);
-		Map<String, Piece> inv = c.getRawInventario();
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = p.getTypeAndAmmountOrCharges();
+		
+		if(inv.containsKey(p.getName()) && info[0] != 1) {
+			Piece inInv = inv.get(p.getName());
+			int ammount = inInv.getTypeAndAmmountOrCharges()[1];
+			inInv.setAmmountOrCharges(info[1]+ammount);
+		}
 		
 		inv.put(p.getName(), p);
-		c.setInventario(inv); //Unnecesary?
+		
+		characters.get(key).updateLoad();
+		
 		return true; //for now...
 	}
 	
-	public boolean rmPiece(int key, Piece p) { //Maybe only the key (String) is necesary
-		Character c = characters.get(key);
-		Map<String, Piece> inv = c.getRawInventario();
+	public boolean rmPiece(int key, Piece p) {
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = p.getTypeAndAmmountOrCharges();
 		
-		inv.remove(p.getName(),p);
-		c.setInventario(inv);
+		if(info[0]!=1 && info[1]>1) inv.get(p.getName()).setAmmountOrCharges(info[1]-1);
+		else if(inv.remove(p.getName())==null) return false;
+		
+		characters.get(key).updateLoad();
+		
 		return true;
+	}
+	
+	public boolean rmPiece(int key, String name) {
+		Map<String, Piece> inv = characters.get(key).getRawInventario();
+		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
+		
+		if(info[0]!=1 && info[1]>1) inv.get(name).setAmmountOrCharges(info[1]-1);
+		else if(inv.remove(name)==null) return false;
+		
+		characters.get(key).updateLoad();
+		
+		return true;
+	}
+	
+	public boolean doShortRest() {
+		for(Character c : characters.values()) {
+			if (c.getState()) {
+				c.setWaterCharges(c.getRationsCharges()-1);
+				c.setRationsCharges(c.getRationsCharges()-1);
+			}
+		}
+		//TODO:Add one to calendar
+		return true; //for now...
+	}
+	
+	public boolean doLongRest() {
+		float newSilver, aux=0;
+		List<Short> listDisc = new ArrayList<Short>();
+		int[] info;
+		
+		for(Character c : characters.values()) {
+			if(c.getState()) {
+				listDisc.add(c.getDisc());
+				newSilver = c.getSilver();
+				
+				for(Piece p : c.getInventario().values()) {
+					info = p.getTypeAndAmmountOrCharges();
+					
+					if(info[0] == 1 && info[1] < 4) { //Its Consumible AND has to be recharged
+						p.setAmmountOrCharges(4);
+					}
+					else if(info[0] == 2) { //Its Loot
+						while(info[1] >= 1) {
+							newSilver += p.getValue();
+							rmPiece(c.hashCode(), p);
+							info[1]--;
+						}
+					}
+				}
+				aux += newSilver;
+				c.setSilver(0);
+			}
+		}
+		
+		for(short disc : listDisc) savedSilver += aux*((float)0.05+(float)(0.02*disc));
+		//TODO: Add 5 to calendar logic
+		
+		return true;//for now...
 	}
 	
 	//I LIKE IT A LOT
@@ -79,5 +152,9 @@ public class CharacterManager implements ManagementPort {
 	
 	public Map<Integer, Character> getCharactersMap(){
 		return characters;
+	}
+	
+	public float getSavedSilver() {
+		return savedSilver;
 	}
 }

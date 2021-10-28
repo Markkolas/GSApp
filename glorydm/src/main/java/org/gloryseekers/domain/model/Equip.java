@@ -3,7 +3,7 @@ package org.gloryseekers.domain.model;
 public class Equip extends Piece{
 	private int ammount;
 	
-	public Equip(String name, int weigth, int value, int ammount){
+	public Equip(String name, int weigth, float value, int ammount){
 		super(name, weigth, value);
 		this.ammount = ammount;
 	}

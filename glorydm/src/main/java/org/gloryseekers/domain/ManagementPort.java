@@ -7,12 +7,16 @@ import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
 
 public interface ManagementPort {
-	int addCharacter(short fort, short disc, float silver, String name); 
+	int addCharacter(short fort, short disc, float silver, String name, String ownerName); 
 	Character readCharacter(int key);
-	boolean modCharacter(short fort, short disc, float silver, String name, int key);
+	boolean modCharacter(short fort, short disc, float silver, String charName, String ownerName, int key);
 	boolean rmCharacter(int key);
 	boolean changeCharacter(int key, boolean newState);
-	public boolean addPiece(int key, Piece p);
-	public boolean rmPiece(int key, Piece p);
-	public Map<Integer, Character> getCharactersMap();
+	boolean addPiece(int key, Piece p);
+	boolean rmPiece(int key, Piece p);
+	boolean rmPiece(int key, String name);
+	boolean doShortRest();
+	boolean doLongRest();
+	Map<Integer, Character> getCharactersMap();
+	float getSavedSilver();
 }

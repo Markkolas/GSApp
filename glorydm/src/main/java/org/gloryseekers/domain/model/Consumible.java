@@ -3,19 +3,10 @@ package org.gloryseekers.domain.model;
 public class Consumible extends Piece{
 	private int charges;
 	
-	public Consumible(String name, int weigth, int value, int charges){
+	public Consumible(String name, int weigth, float value, int charges){
 		super(name, weigth, value);
 		this.charges = charges;
 	}
-
-	public int getCharges() {
-		return charges;
-	}
-
-	public void setCharges(int charges) {
-		this.charges = charges;
-	}
-	
 	public int[] getTypeAndAmmountOrCharges() {
 		int[] i = new int[] {1,charges};
 		return i;
@@ -23,5 +14,7 @@ public class Consumible extends Piece{
 	
 	public void setAmmountOrCharges(int value) {
 		charges = value;
-	};
+		if(value % 4 != 0) super.setWeight((value/4)+1);
+		else super.setWeight(value/4);
+	}
 }
