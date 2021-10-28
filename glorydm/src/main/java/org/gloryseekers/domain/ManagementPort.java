@@ -2,8 +2,9 @@ package org.gloryseekers.domain;
 
 import java.util.Map;
 
-import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.Piece;
+import org.gloryseekers.domain.model.gsdate.GSDate;
 
 public interface ManagementPort {
 	int addCharacter(short fort, short disc, float silver, String name, String ownerName); 
@@ -18,4 +19,5 @@ public interface ManagementPort {
 	boolean doLongRest();
 	Map<Integer, Character> getCharactersMap();
 	float getSavedSilver();
+	GSDate getDate();
 }

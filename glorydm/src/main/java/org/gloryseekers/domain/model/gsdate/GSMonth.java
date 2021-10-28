@@ -1,4 +1,4 @@
-package org.gloryseekers.domain.model.GSDate;
+package org.gloryseekers.domain.model.gsdate;
 
 public enum GSMonth {
     ichigatsu,

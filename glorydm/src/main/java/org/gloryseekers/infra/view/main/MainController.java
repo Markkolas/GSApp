@@ -1,9 +1,11 @@
 package org.gloryseekers.infra.view.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.ManagementPort;
+import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.infra.material.CharacterCard;
 import org.gloryseekers.infra.view.UI;
 
@@ -15,8 +17,7 @@ import javafx.scene.control.Button;
 
 public class MainController {
 
-    private MainViewModel mainViewModel = new MainViewModel();
-
+    private MainViewModel mainViewModel;
     @FXML
     private TabPane rootTabPane;
 
@@ -32,22 +33,18 @@ public class MainController {
     @FXML
     private Button calendarButton;
 
-    private ManagementPort managementPort;
-
     private ArrayList<CharacterCard> characterCards;
 
 
     
     public MainController(UI ui) {
-        this.managementPort = ui.getManagementPort();
+        this.mainViewModel = new MainViewModel(this,ui.getManagementPort());
     }
 
     public void initialize() {
         charactersCardPane.setVgap(20);
         charactersCardPane.setHgap(20);
         this.characterCards = new ArrayList<>();
-        mock();
-        charactersCardPane.getChildren().addAll(characterCards);
         calendarButton.textProperty().bind(mainViewModel.getCurrentGameDateProperty());
 
     }
@@ -57,11 +54,12 @@ public class MainController {
         rootTabPane.selectionModelProperty().get().select(tabTwo);
     }
 
-    //debug 
-    private void mock() {
-        for (int i = 0; i < 3; i++) {
-            this.characterCards.add(new CharacterCard("wad","adsa","http://cr.openjdk.java.net/~jeff/Duke/png/Hips.png"));
-        }
-        this.characterCards.add(new CharacterCard("wad","adsa"));
+    public void paintCharacters(List<Character> characters) {
+        this.characterCards.clear();
+        characters.forEach((c)-> {
+            characterCards.add(new CharacterCard(c.getName(), c.getOwnerName()));
+        });
+        charactersCardPane.getChildren().clear();
+        charactersCardPane.getChildren().addAll(characterCards);
     }
 }

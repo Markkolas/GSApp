@@ -1,11 +1,11 @@
-package org.gloryseekers.domain.model.GSDate;
+package org.gloryseekers.domain.model.gsdate;
 
 /**
  * GSDateFormater is a class which formats and parses GSDates.
  */
 public class GSDateFormater {
 
-    private GSDateFormater() {
+    public GSDateFormater() {
 
     }
 
@@ -31,7 +31,7 @@ public class GSDateFormater {
      * Better solution: Implement toString() method on GSDate
      */
     public String format(GSDate date) {
-        return format(date);
+        return format(date, GSDateFormat.SHORT);
     }
 
     public String format(GSDate date, GSDateFormat format) {

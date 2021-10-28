@@ -19,7 +19,7 @@ public class App{
         ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager and pass it to UI.
         ui.start(); //launch app
         
-/*
+        /*
         /////////////////////////////////////ALPHA TEST////////////////////////////////////////
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         

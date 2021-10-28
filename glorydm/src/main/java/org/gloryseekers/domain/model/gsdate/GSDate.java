@@ -1,9 +1,9 @@
-package org.gloryseekers.domain.model.GSDate;
+package org.gloryseekers.domain.model.gsdate;
 
 /**
  * The class GSDate represents a specific day in the Setting time
  */
-class GSDate {
+public class GSDate {
 
     /**
      * The number of days since the day cero represented by this object.

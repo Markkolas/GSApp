@@ -3,6 +3,7 @@ package org.gloryseekers.aplication;
 import org.gloryseekers.domain.*;
 import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.gsdate.GSDate;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -20,17 +21,20 @@ public class CharacterManager implements ManagementPort {
 	private CharacterManager(CharacterPort characterPort) {
 		this.characterPort = characterPort;
 	}
-	
+
+	@Override
 	public int addCharacter(short fort, short disc, float silver, String charName, String ownerName) {
 		Character c = new Character(fort, disc, silver, false, charName, ownerName);
 		characters.put(c.hashCode(), c);
 		return c.hashCode(); //for now...
 	}
-	
+
+	@Override
 	public Character readCharacter(int key) {
 		return characters.get(key);
 	}
-	
+
+	@Override
 	public boolean modCharacter(short fort, short disc, float silver, String charName, String ownerName, int key) {
 		Character c = characters.get(key);
 		
@@ -42,17 +46,20 @@ public class CharacterManager implements ManagementPort {
 		
 		return true; //for now...
 	}
-	
+
+	@Override
 	public boolean rmCharacter(int key) {
 		characters.remove(key);
 		return true; //for now...
 	}
-	
+
+	@Override
 	public boolean changeCharacter(int key, boolean newState) {
 		characters.get(key).setState(newState);
 		return true; //for now...
 	}
-	
+
+	@Override
 	public boolean addPiece(int key, Piece p) {
 		Map<String, Piece> inv = characters.get(key).getRawInventario();
 		int[] info = p.getTypeAndAmmountOrCharges();
@@ -69,7 +76,8 @@ public class CharacterManager implements ManagementPort {
 		
 		return true; //for now...
 	}
-	
+
+	@Override
 	public boolean rmPiece(int key, Piece p) {
 		Map<String, Piece> inv = characters.get(key).getRawInventario();
 		int[] info = p.getTypeAndAmmountOrCharges();
@@ -82,6 +90,7 @@ public class CharacterManager implements ManagementPort {
 		return true;
 	}
 	
+	@Override
 	public boolean rmPiece(int key, String name) {
 		Map<String, Piece> inv = characters.get(key).getRawInventario();
 		int[] info = inv.get(name).getTypeAndAmmountOrCharges();
@@ -93,7 +102,8 @@ public class CharacterManager implements ManagementPort {
 		
 		return true;
 	}
-	
+
+	@Override
 	public boolean doShortRest() {
 		for(Character c : characters.values()) {
 			if (c.getState()) {
@@ -104,7 +114,8 @@ public class CharacterManager implements ManagementPort {
 		//TODO:Add one to calendar
 		return true; //for now...
 	}
-	
+
+	@Override
 	public boolean doLongRest() {
 		float newSilver, aux=0;
 		List<Short> listDisc = new ArrayList<Short>();
@@ -149,12 +160,20 @@ public class CharacterManager implements ManagementPort {
 		return instance;
 	}
 	
-	
+	@Override
 	public Map<Integer, Character> getCharactersMap(){
 		return characters;
 	}
 	
+	@Override
 	public float getSavedSilver() {
 		return savedSilver;
 	}
+
+	@Override
+	public GSDate getDate() {
+		
+		return new GSDate();//mock
+	}
+
 }
