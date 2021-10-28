@@ -1,5 +1,6 @@
 package org.gloryseekers.domain;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.gloryseekers.aplication.*;
@@ -19,4 +20,7 @@ public interface ManagementPort {
 	boolean doLongRest();
 	Map<Integer, Character> getCharactersMap();
 	float getSavedSilver();
+	public Character loadCharacter(String path);
+    //public Map<Integer, Character> loadAllCharacters();
+    public boolean storeCharacter(Character c);
 }

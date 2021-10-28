@@ -7,18 +7,19 @@ import org.gloryseekers.domain.model.Character;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterManager implements ManagementPort {
 
 	private static CharacterManager instance = null;
 	
-	private CharacterPort characterPort;
+	private CharacterPort storageManager;
 	private Map<Integer, Character> characters = new HashMap<Integer, Character>();
 	private float savedSilver = (float) 0;
 	
 	private CharacterManager(CharacterPort characterPort) {
-		this.characterPort = characterPort;
+		this.storageManager = storageManager;
 	}
 	
 	public int addCharacter(short fort, short disc, float silver, String charName, String ownerName) {
@@ -156,5 +157,24 @@ public class CharacterManager implements ManagementPort {
 	
 	public float getSavedSilver() {
 		return savedSilver;
+	}
+	
+	public Character loadCharacter(String path) {
+		try {
+			return storageManager.loadCharacter(path);
+		}
+		catch(IOException e) {
+			return null;
+		}
+	}
+	
+	public boolean storeCharacter(Character c) {
+		try {
+			storageManager.storeCharacter(c);
+			return true;
+		}
+		catch(IOException e) {
+			return false;
+		}
 	}
 }

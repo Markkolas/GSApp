@@ -6,17 +6,13 @@ import org.gloryseekers.domain.model.Character;
 
 import com.thoughtworks.xstream.*;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.security.AnyTypePermission;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.File;
 
-import java.util.Map;
-import java.util.HashMap;
 
 public class CharacterXML implements CharacterPort {
 
@@ -42,6 +38,7 @@ public class CharacterXML implements CharacterPort {
     	
     	String line, xmlString="";
     	while((line = reader.readLine()) != null) xmlString += line;
+    	reader.close();
     	
         return (Character)xstream.fromXML(xmlString);
     }
@@ -52,7 +49,7 @@ public class CharacterXML implements CharacterPort {
     */
 
     @Override
-    public boolean storeCharacter(Character c) throws IOException{
+    public void storeCharacter(Character c) throws IOException{
         // TODO Auto-generated method stub
 		String xmlString = xstream.toXML(c);
     	
@@ -62,8 +59,6 @@ public class CharacterXML implements CharacterPort {
     	
     	writer.write(xmlString);
     	writer.close();
-    	
-        return true;//for now...
     }
     
 }
