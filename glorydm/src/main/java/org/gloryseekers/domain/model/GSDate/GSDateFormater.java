@@ -27,6 +27,8 @@ public class GSDateFormater {
      * Formats a GSDate into a string.
      * @param date
      * @return
+     * 
+     * Better solution: Implement toString() method on GSDate
      */
     public String format(GSDate date) {
         return format(date);
@@ -40,6 +42,8 @@ public class GSDateFormater {
                 return formatMedium(date);
             case LONG: 
                 return formatLong(date);
+            default:
+            	return null;
         }
     }
 
@@ -56,7 +60,7 @@ public class GSDateFormater {
     }
 
     private int getYear(GSDate date) {
-        return (int) (date.getGSDTime() / 360);
+        return (int) (date.getGSDTime() / 360); 
     }
 
     private int getMonth(GSDate date) {
