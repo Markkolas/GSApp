@@ -2,7 +2,6 @@ package org.gloryseekers.domain;
 
 import org.gloryseekers.domain.model.Character;
 import java.io.IOException;
-import java.util.Map;
 
 public interface CharacterPort {
 

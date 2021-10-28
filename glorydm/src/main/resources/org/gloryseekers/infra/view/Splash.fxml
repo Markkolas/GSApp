@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="splashPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="610.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@dice.jpg" />
+         </image>
+      </ImageView>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
+      <Text fill="#e5ff52" stroke="#b91717" strokeType="OUTSIDE" strokeWidth="4.0" text="Glory Seekers" textAlignment="CENTER">
+         <font>
+            <Font size="56.0" />
+         </font></Text>
+   </children>
+</StackPane>

@@ -2,7 +2,6 @@ package org.gloryseekers.domain;
 
 import java.util.Map;
 
-import org.gloryseekers.aplication.*;
 import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
 

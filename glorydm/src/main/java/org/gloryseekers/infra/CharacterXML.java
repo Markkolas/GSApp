@@ -1,22 +1,20 @@
 package org.gloryseekers.infra;
 
-import org.gloryseekers.domain.CharacterPort;
-import org.gloryseekers.domain.model.*;
-import org.gloryseekers.domain.model.Character;
-
-import com.thoughtworks.xstream.*;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.security.AnyTypePermission;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 
-import java.util.Map;
-import java.util.HashMap;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import org.gloryseekers.domain.CharacterPort;
+import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.Consumible;
+import org.gloryseekers.domain.model.Equip;
+import org.gloryseekers.domain.model.Loot;
+import org.gloryseekers.domain.model.Piece;
 
 public class CharacterXML implements CharacterPort {
 

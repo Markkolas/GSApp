@@ -3,6 +3,7 @@ package org.gloryseekers;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.*;
+import org.gloryseekers.infra.view.UI;
 
 import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
@@ -15,9 +16,10 @@ public class App{
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
         final UI ui = new UI(); //load graphical interface
         
-//        ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager nad give him to UI
-//        ui.start(); //launch app
+        ui.setManagementPort(CharacterManager.getInstance(storageManager)); //Load the business manager and pass it to UI.
+        ui.start(); //launch app
         
+/*
         /////////////////////////////////////ALPHA TEST////////////////////////////////////////
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         
@@ -105,5 +107,6 @@ public class App{
         	System.out.print("Ouch!!!! -> ");
         	e.printStackTrace();
         }
+        */
     }
 }
