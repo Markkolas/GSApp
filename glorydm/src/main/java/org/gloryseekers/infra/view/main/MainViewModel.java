@@ -114,12 +114,6 @@ public class MainViewModel {
 
                 @Override
                 protected List<Character> call() throws Exception {
-                    // mock //This does not work
-                    int key1 = managementPort.addCharacter((short) 2, (short) 1, (float) 23.56, "Puto", "Crotolamo");
-                    int key2 = managementPort.addCharacter((short) 1, (short) 3, (float) 96, "Juan", "Ramon Y Cajal");
-                    int key3 = managementPort.addCharacter((short) -2, (short) 1, (float) 46.5, "Yoyi", "El Yoyis");
-                    int key4 = managementPort.addCharacter((short) 2, (short) -1, (float) 2.4, "Pato", "Una Paloma");
-
                     Map<Integer, Character> map = managementPort.getCharactersMap();
                     return map.values().stream().collect(Collectors.toList());
                 }
@@ -146,5 +140,9 @@ public class MainViewModel {
             };
         }
     };
+
+    public void updateCharacters() {
+        characerService.restart();
+    }
 
 }

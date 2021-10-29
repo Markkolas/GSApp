@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.infra.material.CharacterCard;
+import org.gloryseekers.infra.material.NewCharacterWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +13,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
 
-public class MainController {
+public class MainController implements NewCharacterWindow.Delegate {
 
     private MainViewModel mainViewModel;
     @FXML
@@ -37,6 +38,8 @@ public class MainController {
     public void initialize() {
         addNewCharacterCard.setOnMouseClicked((c)->{
             System.out.println("No, te j0des");
+            NewCharacterWindow ncw = new NewCharacterWindow(this);
+            ncw.show();
         });
         charactersCardPane.setVgap(20);
         charactersCardPane.setHgap(20);
@@ -58,5 +61,10 @@ public class MainController {
         charactersCardPane.getChildren().clear();
         charactersCardPane.getChildren().addAll(characterCards);
         charactersCardPane.getChildren().add(this.addNewCharacterCard);
+    }
+
+    @Override
+    public void handleNewCharacterWindowReturn() {
+        mainViewModel.updateCharacters();
     }
 }

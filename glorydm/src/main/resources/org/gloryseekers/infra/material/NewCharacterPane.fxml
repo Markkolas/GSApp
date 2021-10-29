@@ -43,7 +43,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="centerHBox">
                <children>
-                  <Button mnemonicParsing="false" text="Ok" />
+                  <Button mnemonicParsing="false" onMousePressed="#handleButtonClick" text="Ok" />
                </children>
             </HBox>
          </children>
