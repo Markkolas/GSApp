@@ -7,32 +7,31 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.0" prefWidth="138.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutY="-124.0" prefHeight="627.0" prefWidth="395.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutY="-124.0" prefHeight="627.0" prefWidth="430.0" stylesheets="@CharacterCardStyle.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <HBox prefHeight="10.0" prefWidth="10.0">
+            <HBox prefHeight="10.0" prefWidth="10.0" styleClass="hboxcontainer">
                <children>
-                  <Label text="Fort" />
+                  <Label text="Fortaleza" />
+                  <TextField prefWidth="20.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="10.0" prefWidth="10.0" styleClass="hboxcontainer">
+               <children>
+                  <Label text="Disciplina" />
                   <TextField prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0">
                <children>
-                  <Label text="disc" />
+                  <Label text="Plata" />
                   <TextField prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0">
                <children>
-                  <Label text="silver" />
-                  <TextField prefWidth="20.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="10.0" prefWidth="10.0">
-               <children>
-                  <Label text="charName" />
+                  <Label text="Nombre Personaje" />
                   <TextField prefWidth="20.0" />
                </children>
             </HBox>
@@ -42,7 +41,7 @@
                   <TextField prefWidth="20.0" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="centerHBox">
                <children>
                   <Button mnemonicParsing="false" text="Ok" />
                </children>
