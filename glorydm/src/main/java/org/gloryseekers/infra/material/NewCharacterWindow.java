@@ -8,6 +8,7 @@ import org.gloryseekers.domain.ManagementPort;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -29,18 +30,35 @@ public class NewCharacterWindow extends Stage {
     }
 
     private class Controller extends AnchorPane {
+
+        @FXML
+        private TextField fortField;
+
+        @FXML
+        private TextField disField;
+
+        @FXML
+        private TextField silverField;
+
+        @FXML
+        private TextField nameField;
+
+        @FXML
+        private TextField ownerField;
+
         private Delegate delegate;
 
-        public Controller (Delegate delegate) {
+        public Controller(Delegate delegate) {
             this.delegate = delegate;
         }
 
         @FXML
         private void handleButtonClick() {
-        System.out.print("foo");
-        int key1 = managementPort.addCharacter((short) 2, (short) 1, (float) 23.56, "XD", "Moro");
-        delegate.handleNewCharacterWindowReturn();
-        this.getScene().getWindow().hide();//This does not work, but for now you can close this manualy
+            System.out.print("foo");
+            int key1 = managementPort.addCharacter(Short.parseShort(fortField.getText()),
+                    Short.parseShort(disField.getText()), Float.parseFloat(silverField.getText()), nameField.getText(),
+                    ownerField.getText());
+            delegate.handleNewCharacterWindowReturn();
         }
 
     }

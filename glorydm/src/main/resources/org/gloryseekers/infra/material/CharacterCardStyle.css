@@ -5,6 +5,7 @@ HBox {
 
 TextField {
     -fx-padding: 3;
+    -fx-pref-width: 60;
 }
 
 .centerHBox {

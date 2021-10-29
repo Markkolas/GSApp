@@ -13,32 +13,32 @@
          <children>
             <HBox prefHeight="10.0" prefWidth="10.0" styleClass="hboxcontainer">
                <children>
-                  <Label text="Fortaleza" />
-                  <TextField prefWidth="20.0" />
+                  <Label fx:id="fortLabel" text="Fortaleza" />
+                  <TextField fx:id="fortField" prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0" styleClass="hboxcontainer">
                <children>
-                  <Label text="Disciplina" />
-                  <TextField prefWidth="20.0" />
+                  <Label fx:id="disLabel" text="Disciplina" />
+                  <TextField fx:id="disField" prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0">
                <children>
-                  <Label text="Plata" />
-                  <TextField prefWidth="20.0" />
+                  <Label fx:id="silverLabel" text="Plata" />
+                  <TextField fx:id="silverField" prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0">
                <children>
-                  <Label text="Nombre Personaje" />
-                  <TextField prefWidth="20.0" />
+                  <Label fx:id="nameLabel" text="Nombre Personaje" />
+                  <TextField fx:id="nameField" prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="10.0" prefWidth="10.0">
                <children>
-                  <Label text="ownerName" />
-                  <TextField prefWidth="20.0" />
+                  <Label fx:id="ownerLabel" text="ownerName" />
+                  <TextField fx:id="ownerField" prefWidth="20.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="centerHBox">

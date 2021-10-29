@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.infra.material.NewCharacterWindow;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -16,7 +17,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
-public class MainViewModel {
+public class MainViewModel implements NewCharacterWindow.Delegate {
 
     private ManagementPort managementPort;
 
@@ -29,12 +30,6 @@ public class MainViewModel {
         dateService.start();
         characerService.start();
     }
-
-    public void addNewCharacter(short fort, short disc, float silver, String charName, String ownerName) {
-        int key = managementPort.addCharacter(fort, disc, silver, charName, ownerName);
-        characerService.restart();
-    }
-
 
     private void configureServices() {
         configureCharacterService();
@@ -140,6 +135,16 @@ public class MainViewModel {
             };
         }
     };
+
+    public void addNewCharacter() {
+        NewCharacterWindow ncw = new NewCharacterWindow(this);
+        ncw.show();
+    }
+
+    @Override
+    public void handleNewCharacterWindowReturn() {
+        this.updateCharacters();
+    }
 
     public void updateCharacters() {
         characerService.restart();
