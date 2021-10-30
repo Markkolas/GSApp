@@ -7,7 +7,7 @@ public class WindowsAppPreferences extends AppPreferences {
     }
 
     public static AppPreferences getInstance() {
-        if(instance!=null) {
+        if(instance == null) {
             instance = new WindowsAppPreferences();
         }
         return instance;
@@ -15,7 +15,7 @@ public class WindowsAppPreferences extends AppPreferences {
 
     @Override
     protected String getAppDataURL() {
-        return System.getenv("APPDATA") + "\\" + this.appName + "\\";
+        return System.getenv("APPDATA") + "/" + this.appName;
     }
 
     
