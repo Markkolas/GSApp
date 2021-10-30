@@ -186,6 +186,15 @@ public class CharacterManager implements ManagementPort {
 		}
 	}
 	
+	public Map<Integer, Character> loadAllCharacters(){
+		try {
+			return characterPort.loadAllCharacters();
+		}
+		catch(IOException e) {
+			return null;
+		}
+	}
+	
 	public boolean storeCharacter(Character c) {
 		try {
 			characterPort.storeCharacter(c);

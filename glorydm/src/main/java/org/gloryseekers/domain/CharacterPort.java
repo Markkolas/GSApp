@@ -2,11 +2,12 @@ package org.gloryseekers.domain;
 
 import org.gloryseekers.domain.model.Character;
 import java.io.IOException;
+import java.util.Map;
 
 public interface CharacterPort {
 
-    public Character loadCharacter(String path) throws IOException;
-    //public Map<Integer, Character> loadAllCharacters() throws IOException;
-    public void storeCharacter(Character c) throws IOException;
+    Character loadCharacter(String fileName) throws IOException;
+    Map<Integer, Character> loadAllCharacters() throws IOException;
+    void storeCharacter(Character c) throws IOException;
 
 }
