@@ -1,16 +1,21 @@
 package org.gloryseekers.infra.view.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.infra.material.CharacterCard;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.DirectoryChooser;
+import javafx.scene.control.MenuItem;
 
 public class MainController {
 
@@ -59,5 +64,12 @@ public class MainController {
         charactersCardPane.getChildren().addAll(characterCards);
         charactersCardPane.getChildren().add(this.addNewCharacterCard);
     }
-    
+
+    @FXML
+    public void selectDirectory(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(rootTabPane.getScene().getWindow());
+        System.out.println("URL selected: " + selectedDirectory.toString());
+        mainViewModel.selectNewDirectory(selectedDirectory.toString());
+    }
 }

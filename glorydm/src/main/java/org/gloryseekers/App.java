@@ -88,18 +88,16 @@ public class App {
         System.out.println("PreAlpha rest logic: OK\n");
         
         //Storagement test
-        try {
-        	storageManager.storeCharacter(c1);
-        	System.out.println("Saved: "+c1.toString()+"\nWith name and owner: "+c1.getName()+" "+c1.getOwnerName()+
-        			"\nAttr: "+c1.getDisc()+" "+c1.getFort()+"\nSilver: "+c1.getSilver()+"\nAnd Inventory:"+c1.getInventario().toString());
-        	Character c1Loaded = storageManager.loadCharacter("Ramon Y Cajal_Juan.xml");
-        	System.out.println("\nLoaded: "+c1Loaded.toString()+"\nWith name and owner: "+c1Loaded.getName()+c1Loaded.getOwnerName()+
-        			"\nAttr: "+c1Loaded.getDisc()+" "+c1Loaded.getFort()+"\nSilver: "+c1Loaded.getSilver()+"\nAnd Inventory:"+c1Loaded.getInventario().toString());
-        	System.out.println("\nSeems OK!!!!");
-        }catch(IOException e) {
-        	System.out.print("Ouch!!!! -> ");
-        	e.printStackTrace();
-        }
+        manager.storeCharacter(c1);
+        manager.storeCharacter(c2);
+        System.out.println("Saved: "+c1.toString()+"\nWith name and owner: "+c1.getName()+" "+c1.getOwnerName()+
+        		"\nAttr: "+c1.getDisc()+" "+c1.getFort()+"\nSilver: "+c1.getSilver()+"\nAnd Inventory:"+c1.getInventario().toString());
+        Character c1Loaded = manager.loadCharacter("Ramon Y Cajal_Juan.xml");
+        System.out.println("\nLoaded: "+c1Loaded.toString()+"\nWith name and owner: "+c1Loaded.getName()+c1Loaded.getOwnerName()+
+        		"\nAttr: "+c1Loaded.getDisc()+" "+c1Loaded.getFort()+"\nSilver: "+c1Loaded.getSilver()+"\nAnd Inventory:"+c1Loaded.getInventario().toString());
+        Map<Integer,Character> allCharacters = manager.loadAllCharacters();
+        System.out.println("\nYou should see all stored characters here: "+allCharacters.toString());
+        System.out.println("\nSeems OK!!!!");
         */
     }
 }

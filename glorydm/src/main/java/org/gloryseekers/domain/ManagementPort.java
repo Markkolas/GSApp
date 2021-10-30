@@ -20,7 +20,7 @@ public interface ManagementPort {
 	Map<Integer, Character> getCharactersMap();
 	float getSavedSilver();
 	GSDate getDate();
-	public Character loadCharacter(String path);
-    //public Map<Integer, Character> loadAllCharacters();
-    public boolean storeCharacter(Character c);
+	Character loadCharacter(String path);
+    Map<Integer, Character> loadAllCharacters();
+    boolean storeCharacter(Character c);
 }

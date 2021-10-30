@@ -15,6 +15,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
+import javafx.concurrent.Worker.State;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
@@ -39,6 +40,30 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureLastURService();
     }
 
+    private <T> void configureError(Service<T> service, String text) {
+
+        service.setOnFailed(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent event) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        event.getSource().getException().printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText(null);
+                        alert.setTitle("ERROR");
+                        alert.setContentText(text + " \n " + event.getSource().getException().toString());
+                        alert.show();
+
+                    }
+
+                });
+            }
+        });
+    }
+
     private void configureCharacterService() {
         characerService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
@@ -49,54 +74,11 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
         });
 
-        characerService.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent event) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        event.getSource().getException().printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText(null);
-                        alert.setTitle("ERROR");
-                        alert.setContentText("Los Personajes no se cargaron correctamente \n "
-                                + event.getSource().getException().toString());
-                        alert.show();
-
-                    }
-
-                });
-            }
-
-        });
+        configureError(characerService, "No se cargaron correctamente los personajes");
     }
 
     private void configureDateService() {
-        dateService.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent event) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        event.getSource().getException().printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText(null);
-                        alert.setTitle("ERROR");
-                        alert.setContentText(
-                                "La fecha no carga correctamente \n" + event.getSource().getException().toString());
-                        alert.show();
-
-                    }
-
-                });
-
-            }
-
-        });
+        configureError(dateService, "La fecha no carga correctamente");
 
     }
 
@@ -111,36 +93,10 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
         });
 
-        lastURService.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent event) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        event.getSource().getException().printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText(null);
-                        alert.setTitle("ERROR");
-                        alert.setContentText(
-                                "Las preferencias no cargan correctamente \n" + event.getSource().getException().toString());
-                        alert.show();
-
-                    }
-
-                });
-
-            }
-
-        });
-
+        configureError(lastURService, "Las preferencias no cargan correctamente");
     }
 
-
-    public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
-        return this.dateService.valueProperty();
-    }
+    // SERVICES
 
     private Service<List<Character>> characerService = new Service<>() {
 
@@ -192,18 +148,62 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
+    private Service<Boolean> storePropertiesService = new Service<>() {
+
+        @Override
+        protected Task<Boolean> createTask() {
+            return new Task<Boolean>() {
+
+                @Override
+                protected Boolean call() throws Exception {
+                    AppPreferences appPreferences = AppPreferences.getSystemInstance();
+                    if (!appPreferences.store())
+                        throw new Exception("UADS");
+                    return Boolean.TRUE;
+                }
+            };
+        }
+    };
+
+    private void storeProperties() {
+        switch (storePropertiesService.getState()) {
+        case CANCELLED:
+        case FAILED:
+            storePropertiesService.restart();
+            break;
+        case READY:
+            storePropertiesService.start();
+        case RUNNING:
+        case SCHEDULED:
+        case SUCCEEDED:
+        }
+    }
+
+    // PUBLIC
+
     public void addNewCharacter() {
         NewCharacterWindow ncw = new NewCharacterWindow(this);
         ncw.show();
     }
 
+    public void updateCharacters() {
+        characerService.restart();
+    }
+
+    public void selectNewDirectory(String url) {
+        AppPreferences.getSystemInstance().setProperty("lastpartyurl", url);
+        storeProperties();
+    }
+
+    public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
+        return this.dateService.valueProperty();
+    }
+
+    // DELEGATES
+
     @Override
     public void handleNewCharacterWindowReturn() {
         this.updateCharacters();
-    }
-
-    public void updateCharacters() {
-        characerService.restart();
     }
 
 }

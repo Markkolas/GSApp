@@ -87,4 +87,18 @@ public abstract class AppPreferences {
     return properties.getProperty(key);
   }
 
+  public void setProperty(String key, String value) {
+    properties.put(key,value);
+  }
+
+  public boolean store() {
+    try {
+      properties.store(this.outputStream, null);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+
 }

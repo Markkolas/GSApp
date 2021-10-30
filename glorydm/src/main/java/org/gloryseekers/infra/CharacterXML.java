@@ -1,11 +1,13 @@
 package org.gloryseekers.infra;
 
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -19,7 +21,7 @@ import org.gloryseekers.domain.model.Piece;
 
 public class CharacterXML implements CharacterPort {
 
-	XStream xstream;
+	private final XStream xstream;
 	
 	public CharacterXML() {
 		//Configuration stage
@@ -35,9 +37,9 @@ public class CharacterXML implements CharacterPort {
 	}
 	
     @Override
-    public Character loadCharacter(String path) throws IOException{
+    public Character loadCharacter(String fileName) throws IOException{
         // TODO Auto-generated method stub
-    	BufferedReader reader = new BufferedReader(new FileReader("charSaves/"+path));
+    	BufferedReader reader = new BufferedReader(new FileReader("charSaves/"+fileName));
     	
     	String line, xmlString="";
     	while((line = reader.readLine()) != null) xmlString += line;
@@ -45,11 +47,22 @@ public class CharacterXML implements CharacterPort {
     	
         return (Character)xstream.fromXML(xmlString);
     }
-    /*
-    public Map<Integer, Character> loadAllCharacters(){
+    
+    public Map<Integer, Character> loadAllCharacters() throws IOException{
+    	File path = new File("charSaves/");
+    	Map<Integer, Character> map = new HashMap<Integer, Character>();
+    	Character c;
     	
+    	for(File file : path.listFiles()) {
+    		if(file.getName().contains(".xml")) {
+    			c = loadCharacter(file.getName());
+    			map.put(c.hashCode(), c);
+    		}
+    	}
+    	
+    	return map;
     }
-    */
+    
 
     @Override
     public void storeCharacter(Character c) throws IOException{
