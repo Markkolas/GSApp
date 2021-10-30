@@ -2,6 +2,7 @@ package org.gloryseekers.infra.view;
 
 import java.io.IOException;
 
+import org.gloryseekers.infra.preferences.AppPreferences;
 import org.gloryseekers.infra.view.main.MainController;
 
 import javafx.application.Platform;
@@ -27,6 +28,7 @@ public class SplashController {
         public void run() {
             try {
                 Thread.sleep(1000); //IDK MEN :D
+                AppPreferences.getSystemInstance();
             } catch (InterruptedException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
