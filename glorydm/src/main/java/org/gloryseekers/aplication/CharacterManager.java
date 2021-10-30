@@ -8,6 +8,7 @@ import org.gloryseekers.domain.model.gsdate.GSDate;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterManager implements ManagementPort {
@@ -175,5 +176,23 @@ public class CharacterManager implements ManagementPort {
 		
 		return new GSDate();//mock
 	}
-
+	
+	public Character loadCharacter(String path) {
+		try {
+			return characterPort.loadCharacter(path);
+		}
+		catch(IOException e) {
+			return null;
+		}
+	}
+	
+	public boolean storeCharacter(Character c) {
+		try {
+			characterPort.storeCharacter(c);
+			return true;
+		}
+		catch(IOException e) {
+			return false;
+		}
+	}
 }

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -40,6 +41,7 @@ public class CharacterXML implements CharacterPort {
     	
     	String line, xmlString="";
     	while((line = reader.readLine()) != null) xmlString += line;
+    	reader.close();
     	
         return (Character)xstream.fromXML(xmlString);
     }
@@ -50,7 +52,7 @@ public class CharacterXML implements CharacterPort {
     */
 
     @Override
-    public boolean storeCharacter(Character c) throws IOException{
+    public void storeCharacter(Character c) throws IOException{
         // TODO Auto-generated method stub
 		String xmlString = xstream.toXML(c);
     	
@@ -60,8 +62,6 @@ public class CharacterXML implements CharacterPort {
     	
     	writer.write(xmlString);
     	writer.close();
-    	
-        return true;//for now...
     }
     
 }
