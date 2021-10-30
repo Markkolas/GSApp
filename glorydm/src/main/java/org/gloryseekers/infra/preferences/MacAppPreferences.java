@@ -7,7 +7,7 @@ public class MacAppPreferences extends AppPreferences {
     }
 
     public static AppPreferences getInstance() {
-        if(instance!=null) {
+        if(instance==null) {
             instance = new MacAppPreferences();
         }
         return instance;

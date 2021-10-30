@@ -15,7 +15,6 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.concurrent.Worker.State;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
@@ -165,6 +164,21 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
+    private Service<Boolean>  loadCharactersService = new Service<>() {
+
+        @Override
+        protected Task<Boolean> createTask() {
+            return new Task<Boolean>() {
+
+                @Override
+                protected Boolean call()  {
+                    managementPort.loadAllCharacters();
+                    return Boolean.TRUE;
+                }
+            };
+        }
+    };
+
     private void storeProperties() {
         switch (storePropertiesService.getState()) {
         case CANCELLED:
@@ -177,6 +191,21 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         case SCHEDULED:
         case SUCCEEDED:
         }
+    }
+
+    private void loadCharacters() {
+        switch (loadCharactersService.getState()) {
+            case CANCELLED:
+            case FAILED:
+                storePropertiesService.restart();
+                break;
+            case READY:
+                storePropertiesService.start();
+            case RUNNING:
+            case SCHEDULED:
+            case SUCCEEDED:
+            }
+            updateCharacters();
     }
 
     // PUBLIC

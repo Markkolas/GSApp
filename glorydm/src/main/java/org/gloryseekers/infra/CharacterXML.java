@@ -48,7 +48,7 @@ public class CharacterXML implements CharacterPort {
         return (Character)xstream.fromXML(xmlString);
     }
     
-    public Map<Integer, Character> loadAllCharacters() throws IOException{
+    public Map<Integer, Character> loadAllCharacters() throws IOException {
     	File path = new File("charSaves/");
     	Map<Integer, Character> map = new HashMap<Integer, Character>();
     	Character c;

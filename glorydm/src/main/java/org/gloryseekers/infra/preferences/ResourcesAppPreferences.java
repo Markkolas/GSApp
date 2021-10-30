@@ -9,7 +9,7 @@ public class ResourcesAppPreferences extends AppPreferences {
     }
 
     public static AppPreferences getInstance() {
-        if(instance!=null) {
+        if(instance==null) {
             instance = new ResourcesAppPreferences();
         }
         return instance;
