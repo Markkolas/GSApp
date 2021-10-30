@@ -8,6 +8,7 @@ import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.infra.material.NewCharacterWindow;
+import org.gloryseekers.infra.preferences.AppPreferences;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -29,11 +30,13 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureServices();
         dateService.start();
         characerService.start();
+        lastURService.start();
     }
 
     private void configureServices() {
         configureCharacterService();
         configureDateService();
+        configureLastURService();
     }
 
     private void configureCharacterService() {
@@ -97,6 +100,44 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
     }
 
+    private void configureLastURService() {
+
+        lastURService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent event) {
+                System.out.println("The last url was " + event.getSource().getValue());
+            }
+
+        });
+
+        lastURService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent event) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        event.getSource().getException().printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText(null);
+                        alert.setTitle("ERROR");
+                        alert.setContentText(
+                                "Las preferencias no cargan correctamente \n" + event.getSource().getException().toString());
+                        alert.show();
+
+                    }
+
+                });
+
+            }
+
+        });
+
+    }
+
+
     public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
         return this.dateService.valueProperty();
     }
@@ -132,6 +173,21 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
                     return "Ichigatsu, 1, 1001";
                 }
 
+            };
+        }
+    };
+
+    private Service<String> lastURService = new Service<>() {
+
+        @Override
+        protected Task<String> createTask() {
+            return new Task<String>() {
+
+                @Override
+                protected String call() throws Exception {
+                    AppPreferences appPreferences = AppPreferences.getSystemInstance();
+                    return appPreferences.getProperty("lastpartyurl"); // maybe I can force an exception is this is null
+                }
             };
         }
     };
