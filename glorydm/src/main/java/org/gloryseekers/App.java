@@ -5,12 +5,6 @@ import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.*;
 import org.gloryseekers.infra.view.UI;
 
-import org.gloryseekers.domain.model.*;
-import org.gloryseekers.domain.model.Character;
-import org.gloryseekers.domain.model.*;
-
-import java.io.IOException;
-
 public class App {
     public static void main(String[] args) {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter

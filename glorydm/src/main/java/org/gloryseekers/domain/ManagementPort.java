@@ -1,6 +1,5 @@
 package org.gloryseekers.domain;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.gloryseekers.domain.model.Character;
