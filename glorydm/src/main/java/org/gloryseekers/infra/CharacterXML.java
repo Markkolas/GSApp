@@ -56,7 +56,7 @@ public class CharacterXML implements CharacterPort {
     	
     	for(File file : loadDirectory.listFiles()) {
     		if(file.getName().contains(".xml")) {
-    			c = loadCharacter(file.getName());
+    			c = loadCharacter(file.getAbsolutePath());
     			map.put(c.hashCode(), c);
     		}
     	}
