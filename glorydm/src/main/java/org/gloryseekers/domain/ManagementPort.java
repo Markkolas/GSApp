@@ -1,5 +1,6 @@
 package org.gloryseekers.domain;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.gloryseekers.domain.model.Character;
@@ -20,7 +21,7 @@ public interface ManagementPort {
 	Map<Integer, Character> getCharactersMap();
 	float getSavedSilver();
 	GSDate getDate();
-	Character loadCharacter(String path);
-    Map<Integer, Character> loadAllCharacters();
-    boolean storeCharacter(Character c);
+	boolean loadCharacter(String absolutePath);
+    boolean loadAllCharacters(String loadDirectoryPath);
+    boolean storeCharacter(Character c, String saveDirectoryPath);
 }

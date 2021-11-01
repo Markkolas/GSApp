@@ -177,27 +177,41 @@ public class CharacterManager implements ManagementPort {
 		return new GSDate();//mock
 	}
 	
-	public Character loadCharacter(String path) {
+	/*
+	 * FOR THE UI PROGRAMER: These functions work on core level, updating instances on memory or saving characters in files. It is expected that these functions
+	 * will be used in conjuction with getCharactersMap() method.
+	 */
+	
+	public boolean loadCharacter(String absolutePath) {
 		try {
-			return characterPort.loadCharacter(path);
+			/* THIS IS NOT VERY CHEEKI BREEEKI
+			 * By doing this, user could load an already loaded character, creating not a logic but conceptual duplicate of the character.
+			 * Two diferent instances with same attributes would appear in the character map, this is bad to the user.
+			 * 
+			 * TODO: Implement equals() method in Character and inventory classes so we can compare by using forEach() or containsValue() method.
+			 */
+			Character c = characterPort.loadCharacter(absolutePath);
+			characters.put(c.hashCode(), c);
+			return true;
 		}
 		catch(IOException e) {
-			return null;
+			return false;
 		}
 	}
 	
-	public Map<Integer, Character> loadAllCharacters(){
+	public boolean loadAllCharacters(String loadDirectoryPath){
 		try {
-			return characterPort.loadAllCharacters();
+			characters = characterPort.loadAllCharacters(loadDirectoryPath);
+			return true;
 		}
 		catch(IOException e) {
-			return null;
+			return false;
 		}
 	}
 	
-	public boolean storeCharacter(Character c) {
+	public boolean storeCharacter(Character c, String saveDirectoryPath) {
 		try {
-			characterPort.storeCharacter(c);
+			characterPort.storeCharacter(c, saveDirectoryPath);
 			return true;
 		}
 		catch(IOException e) {

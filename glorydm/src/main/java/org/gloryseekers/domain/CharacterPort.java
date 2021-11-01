@@ -6,8 +6,8 @@ import java.util.Map;
 
 public interface CharacterPort {
 
-    Character loadCharacter(String fileName) throws IOException;
-    Map<Integer, Character> loadAllCharacters() throws IOException;
-    void storeCharacter(Character c) throws IOException;
+    Character loadCharacter(String absolutePath) throws IOException;
+    Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException;
+    void storeCharacter(Character c, String saveDirectoryPath) throws IOException;
 
 }

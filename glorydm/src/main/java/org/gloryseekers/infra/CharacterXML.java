@@ -37,9 +37,9 @@ public class CharacterXML implements CharacterPort {
 	}
 	
     @Override
-    public Character loadCharacter(String fileName) throws IOException{
+    public Character loadCharacter(String absolutePath) throws IOException{
         // TODO Auto-generated method stub
-    	BufferedReader reader = new BufferedReader(new FileReader("charSaves/"+fileName));
+    	BufferedReader reader = new BufferedReader(new FileReader(absolutePath));
     	
     	String line, xmlString="";
     	while((line = reader.readLine()) != null) xmlString += line;
@@ -48,12 +48,12 @@ public class CharacterXML implements CharacterPort {
         return (Character)xstream.fromXML(xmlString);
     }
     
-    public Map<Integer, Character> loadAllCharacters() throws IOException {
-    	File path = new File("charSaves/");
+    public Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException {
+    	File loadDirectory = new File(loadDirectoryPath);
     	Map<Integer, Character> map = new HashMap<Integer, Character>();
     	Character c;
     	
-    	for(File file : path.listFiles()) {
+    	for(File file : loadDirectory.listFiles()) {
     		if(file.getName().contains(".xml")) {
     			c = loadCharacter(file.getName());
     			map.put(c.hashCode(), c);
@@ -65,11 +65,11 @@ public class CharacterXML implements CharacterPort {
     
 
     @Override
-    public void storeCharacter(Character c) throws IOException{
+    public void storeCharacter(Character c, String saveDirectoryPath) throws IOException{
         // TODO Auto-generated method stub
 		String xmlString = xstream.toXML(c);
     	
-    	String path = "charSaves/"+c.getOwnerName()+"_"+c.getName()+".xml";
+    	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".xml";
     	
     	BufferedWriter writer = new BufferedWriter(new FileWriter(path));
     	
