@@ -49,6 +49,7 @@ public class CharacterXML implements CharacterPort {
     }
     
     public Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException {
+		System.out.println("CharacterXML" + loadDirectoryPath);
     	File loadDirectory = new File(loadDirectoryPath);
     	Map<Integer, Character> map = new HashMap<Integer, Character>();
     	Character c;
