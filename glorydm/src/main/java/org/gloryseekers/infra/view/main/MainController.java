@@ -72,7 +72,7 @@ public class MainController {
     public void selectDirectory(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(rootTabPane.getScene().getWindow());
-        System.out.println("URL selected: " + selectedDirectory.toString());
+        System.out.println("URL selected: " + selectedDirectory.toString()); //control null pls
         mainViewModel.selectNewDirectory(selectedDirectory.toString());
     }
 }

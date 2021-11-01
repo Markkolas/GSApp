@@ -244,7 +244,6 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         case RUNNING:
         case SCHEDULED:
         }
-        updateCharacters();
     }
 
     private void loadCharactersFromDisk() {
