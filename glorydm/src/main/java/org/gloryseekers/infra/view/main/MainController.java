@@ -9,13 +9,11 @@ import org.gloryseekers.infra.material.CharacterCard;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.DirectoryChooser;
-import javafx.scene.control.MenuItem;
 
 public class MainController {
 

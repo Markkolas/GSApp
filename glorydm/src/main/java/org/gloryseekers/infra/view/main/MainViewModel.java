@@ -24,19 +24,21 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
     private MainController controller;
 
+    private AppPreferences preferences;
+
     public MainViewModel(MainController controller) {
+        this.preferences = AppPreferences.getSystemInstance();
         this.controller = controller;
         this.managementPort = CharacterManager.getInstance();
         configureServices();
         dateService.start();
-        characerService.start();
-        lastURService.start();
     }
 
     private void configureServices() {
         configureCharacterService();
         configureDateService();
         configureLastURService();
+        configureLoadService();
     }
 
     private <T> void configureError(Service<T> service, String text) {
@@ -55,9 +57,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
                         alert.setTitle("ERROR");
                         alert.setContentText(text + " \n " + event.getSource().getException().toString());
                         alert.show();
-
                     }
-
                 });
             }
         });
@@ -76,6 +76,20 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureError(characerService, "No se cargaron correctamente los personajes");
     }
 
+    private void configureLoadService() {
+        loadService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent event) {
+                System.out.println("Loaded from disk to ram");
+                loadCharacters();//(from ram)
+            }
+
+        });
+
+        configureError(loadService, "No se cargaron correctamente los personajes del disco a ram");
+    }
+
     private void configureDateService() {
         configureError(dateService, "La fecha no carga correctamente");
 
@@ -87,7 +101,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
             @Override
             public void handle(WorkerStateEvent event) {
-                System.out.println("The last url was " + event.getSource().getValue());
+                loadService.restart();
             }
 
         });
@@ -97,6 +111,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
     // SERVICES
 
+    /**
+     * Service with loads the Characters form ram
+     */
     private Service<List<Character>> characerService = new Service<>() {
 
         @Override
@@ -105,10 +122,11 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected List<Character> call() throws Exception {
-                    Map<Integer, Character> map = managementPort.getCharactersMap();
+                    System.out.println("Started characterService");
+                    Map<Integer, Character> map = managementPort.getCharactersMap();// from ram
+                    System.out.println("Map To Sting " + map.toString());
                     return map.values().stream().collect(Collectors.toList());
                 }
-
             };
         }
     };
@@ -140,8 +158,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected String call() throws Exception {
-                    AppPreferences appPreferences = AppPreferences.getSystemInstance();
-                    return appPreferences.getProperty("lastpartyurl"); // maybe I can force an exception is this is null
+                    return preferences.getProperty("lastpartyurl"); // maybe I can  force an exception is  this is null
                 }
             };
         }
@@ -155,8 +172,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected Boolean call() throws Exception {
-                    AppPreferences appPreferences = AppPreferences.getSystemInstance();
-                    if (!appPreferences.store())
+                    if (!preferences.store())
                         throw new Exception("UADS");
                     return Boolean.TRUE;
                 }
@@ -164,15 +180,38 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
-    private Service<Boolean>  loadCharactersService = new Service<>() {
+    /**
+     * Service to load form disk
+     */
+    private Service<Boolean> loadService = new Service<>() {
 
         @Override
         protected Task<Boolean> createTask() {
             return new Task<Boolean>() {
 
                 @Override
-                protected Boolean call()  {
-                    managementPort.loadAllCharacters();
+                protected Boolean call() {
+                    String url = preferences.getProperty("lastpartyurl");
+                    System.out.println("Loading Characters from " + url);
+                    managementPort.loadAllCharacters(url);
+                    return Boolean.TRUE;
+                }
+            };
+        }
+    };
+
+        /**
+     * Service to save to disk
+     */
+    private Service<Boolean> saveService = new Service<>() {
+
+        @Override
+        protected Task<Boolean> createTask() {
+            return new Task<Boolean>() {
+
+                @Override
+                protected Boolean call() {
+             
                     return Boolean.TRUE;
                 }
             };
@@ -183,29 +222,43 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         switch (storePropertiesService.getState()) {
         case CANCELLED:
         case FAILED:
+        case SUCCEEDED:
             storePropertiesService.restart();
             break;
         case READY:
             storePropertiesService.start();
         case RUNNING:
         case SCHEDULED:
-        case SUCCEEDED:
         }
     }
 
     private void loadCharacters() {
-        switch (loadCharactersService.getState()) {
-            case CANCELLED:
-            case FAILED:
-                storePropertiesService.restart();
-                break;
-            case READY:
-                storePropertiesService.start();
-            case RUNNING:
-            case SCHEDULED:
-            case SUCCEEDED:
-            }
-            updateCharacters();
+        switch (characerService.getState()) {
+        case CANCELLED:
+        case FAILED:
+        case SUCCEEDED:
+            characerService.restart();
+            break;
+        case READY:
+            characerService.start();
+        case RUNNING:
+        case SCHEDULED:
+        }
+        updateCharacters();
+    }
+
+    private void loadCharactersFromDisk() {
+        switch (loadService.getState()) {
+        case SUCCEEDED:
+        case CANCELLED:
+        case FAILED:
+            loadService.restart();
+            break;
+        case READY:
+            loadService.start();
+        case RUNNING:
+        case SCHEDULED:
+        }
     }
 
     // PUBLIC
@@ -222,6 +275,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     public void selectNewDirectory(String url) {
         AppPreferences.getSystemInstance().setProperty("lastpartyurl", url);
         storeProperties();
+        loadCharactersFromDisk();
     }
 
     public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
