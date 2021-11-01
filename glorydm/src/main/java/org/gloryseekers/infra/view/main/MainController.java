@@ -46,6 +46,7 @@ public class MainController {
         this.characterCards = new ArrayList<>();
         this.mainViewModel = new MainViewModel(this);
         calendarButton.textProperty().bind(mainViewModel.getCurrentGameDateProperty());
+        paintCharacters();
     }
 
     @FXML
@@ -58,6 +59,10 @@ public class MainController {
         characters.forEach((c)-> {
             characterCards.add(new CharacterCard(c.getName(), c.getOwnerName()));
         });
+        paintCharacters();
+    }
+
+    private void paintCharacters() {
         charactersCardPane.getChildren().clear();
         charactersCardPane.getChildren().addAll(characterCards);
         charactersCardPane.getChildren().add(this.addNewCharacterCard);
