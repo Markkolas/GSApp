@@ -46,6 +46,7 @@ public class MainController {
         this.characterCards = new ArrayList<>();
         this.mainViewModel = new MainViewModel(this);
         calendarButton.textProperty().bind(mainViewModel.getCurrentGameDateProperty());
+        paintCharacters();
     }
 
     @FXML
@@ -58,6 +59,10 @@ public class MainController {
         characters.forEach((c)-> {
             characterCards.add(new CharacterCard(c.getName(), c.getOwnerName()));
         });
+        paintCharacters();
+    }
+
+    private void paintCharacters() {
         charactersCardPane.getChildren().clear();
         charactersCardPane.getChildren().addAll(characterCards);
         charactersCardPane.getChildren().add(this.addNewCharacterCard);
@@ -67,7 +72,7 @@ public class MainController {
     public void selectDirectory(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(rootTabPane.getScene().getWindow());
-        System.out.println("URL selected: " + selectedDirectory.toString());
+        System.out.println("URL selected: " + selectedDirectory.toString()); //control null pls
         mainViewModel.selectNewDirectory(selectedDirectory.toString());
     }
 }
