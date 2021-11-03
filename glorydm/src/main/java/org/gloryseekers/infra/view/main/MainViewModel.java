@@ -18,14 +18,31 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
+/**
+ * The view model corresponding to the main view.
+ */
 public class MainViewModel implements NewCharacterWindow.Delegate {
 
+    /**
+     * The ManagementPort instance.
+     */
     private ManagementPort managementPort;
 
+    /**
+     * The controller corresponding to this model.
+     */
     private MainController controller;
 
+    /**
+     * The AppPreferences instance.
+     */
     private AppPreferences preferences;
 
+    /**
+     * Creates a new intance using the arguments provided.
+     * 
+     * @param controller The controller corresponding to this model.
+     */
     public MainViewModel(MainController controller) {
         this.preferences = AppPreferences.getSystemInstance();
         this.controller = controller;
@@ -34,6 +51,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         dateService.start();
     }
 
+    /**
+     * Configures all this view services
+     */
     private void configureServices() {
         configureCharacterService();
         configureDateService();
@@ -41,6 +61,14 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureLoadService();
     }
 
+    /**
+     * Configures the given service so that if its status changes to FAILED the app
+     * show an alert with the given text and the Exception that caused the failure.
+     * 
+     * @param <T>
+     * @param service The Service which is going to be configured.
+     * @param text    A string which represents the error text.
+     */
     private <T> void configureError(Service<T> service, String text) {
 
         service.setOnFailed(new EventHandler<WorkerStateEvent>() {
@@ -63,6 +91,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         });
     }
 
+    /**
+     * Configures the characterService.
+     */
     private void configureCharacterService() {
         characerService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
@@ -76,13 +107,16 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureError(characerService, "No se cargaron correctamente los personajes");
     }
 
+    /**
+     * Configures the loadService.
+     */
     private void configureLoadService() {
         loadService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
             @Override
             public void handle(WorkerStateEvent event) {
                 System.out.println("Loaded from disk to ram");
-                loadCharacters();//(from ram)
+                loadCharacters();// (from ram)
             }
 
         });
@@ -90,11 +124,17 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureError(loadService, "No se cargaron correctamente los personajes del disco a ram");
     }
 
+    /**
+     * Configures the dateService.
+     */
     private void configureDateService() {
         configureError(dateService, "La fecha no carga correctamente");
 
     }
 
+    /**
+     * Configures the lastURLService.
+     */
     private void configureLastURService() {
 
         lastURService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -112,7 +152,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     // SERVICES
 
     /**
-     * Service with return Characters form ram
+     * Service with return Characters form ram.
      */
     private Service<List<Character>> characerService = new Service<>() {
 
@@ -132,7 +172,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     /**
-     * Service used to retrieve the actual GSDate 
+     * Service used to retrieve the actual GSDate.
      */
     private Service<String> dateService = new Service<>() {
 
@@ -153,7 +193,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
     /**
-     * Service to retrieve the last Directory used as an String
+     * Service to retrieve the last Directory used as an String.
      */
     private Service<String> lastURService = new Service<>() {
 
@@ -163,14 +203,14 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected String call() throws Exception {
-                    return preferences.getProperty("lastpartyurl"); // maybe I can  force an exception is  this is null
+                    return preferences.getProperty("lastpartyurl"); // maybe I can force an exception is this is null
                 }
             };
         }
     };
 
     /**
-     * Service to store the properties to the computer's app data storage
+     * Service to store the properties to the computer's app data storage.
      */
     private Service<Boolean> storePropertiesService = new Service<>() {
 
@@ -189,7 +229,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     /**
-     * Service to load Characters form disk to ram
+     * Service to load Characters form disk to ram.
      */
     private Service<Boolean> loadService = new Service<>() {
 
@@ -209,7 +249,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     /**
-     * Service to save from Ram to Disk
+     * Service to save from Ram to Disk.
      */
     private Service<Boolean> saveService = new Service<>() {
 
