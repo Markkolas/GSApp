@@ -1,10 +1,23 @@
 # GSApp
 Simple app to support Glory Seekers DMs
 
-# Third party assets
+Glory Seekers is a homebrew role-playing game whose rules are not yet public and may never be. Anyway, you can still discern some of the mechanics of the game by reading the business logic of this application.
 
-[Default character](https://uxwing.com/male-icon/)
+## License
 
-Imagen de <a href="https://pixabay.com/es/users/carufrannco-4599182/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2351448">Ana Carolina Franco</a> en <a href="https://pixabay.com/es/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2351448">Pixabay</a>
+### GSApp
 
-Imagen de <a href="https://pixabay.com/es/users/raphaelsilva-4702998/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3814050">raphaelsilva</a> en <a href="https://pixabay.com/es/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3814050">Pixabay</a>
+Copyright (C) 2021 Marco Antonio Villa Aparicio && Diego Domínguez González
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+as published by the Free Software Foundation; either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU General Public
+License along with this library, if not check it [here](https://www.gnu.org/licenses/gpl-3.0.txt) 
+
+![lgpl3](https://www.gnu.org/graphics/gplv3-or-later.png)
