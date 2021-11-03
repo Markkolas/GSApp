@@ -57,8 +57,9 @@ public class NewCharacterWindow extends Stage {
             System.out.print("foo");
             int key1 = managementPort.addCharacter(Short.parseShort(fortField.getText()),
                     Short.parseShort(disField.getText()), Float.parseFloat(silverField.getText()), nameField.getText(),
-                    ownerField.getText());
+                    ownerField.getText()); //This maybe should be a Service IDK
             delegate.handleNewCharacterWindowReturn();
+            nameField.getScene().getWindow().hide();
         }
 
     }
