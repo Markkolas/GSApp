@@ -28,6 +28,10 @@ public class Character {
 		this.ownerName = ownerName;
 		this.load = 2;
 	}
+	
+	public Character() {
+		
+	}
 
 	//GETTERS AND SETTERS
 	public short getFort() {

@@ -9,31 +9,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.model.Character;
-import org.gloryseekers.domain.model.Consumible;
-import org.gloryseekers.domain.model.Equip;
-import org.gloryseekers.domain.model.Loot;
-import org.gloryseekers.domain.model.Piece;
 
 public class CharacterXML implements CharacterPort {
 
-	private final XStream xstream;
+	private final XmlMapper xmlMapper;
 	
 	public CharacterXML() {
 		//Configuration stage
-		xstream = new XStream(new DomDriver());
-		
-		xstream.alias("Character", Character.class);
-		xstream.alias("Equip", Equip.class);
-		xstream.alias("Loot", Loot.class);
-		xstream.alias("Piece", Piece.class);
-		
-		//An attacker could use the XML files unmarshallowing to bad things. This line prevents it.
-		xstream.allowTypes(new Class[] {Character.class, Equip.class, Consumible.class, Loot.class});
+		xmlMapper = new XmlMapper();
 	}
 	
     @Override
@@ -45,7 +32,7 @@ public class CharacterXML implements CharacterPort {
     	while((line = reader.readLine()) != null) xmlString += line;
     	reader.close();
     	
-        return (Character)xstream.fromXML(xmlString);
+        return xmlMapper.readValue(xmlString, Character.class);
     }
     
     public Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException {
@@ -68,7 +55,7 @@ public class CharacterXML implements CharacterPort {
     @Override
     public void storeCharacter(Character c, String saveDirectoryPath) throws IOException{
         // TODO Auto-generated method stub
-		String xmlString = xstream.toXML(c);
+		String xmlString = xmlMapper.writeValueAsString(c);
     	
     	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".xml";
     	
