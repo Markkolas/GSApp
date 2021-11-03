@@ -112,7 +112,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     // SERVICES
 
     /**
-     * Service with loads the Characters form ram
+     * Service with return Characters form ram
      */
     private Service<List<Character>> characerService = new Service<>() {
 
@@ -131,6 +131,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
+    /**
+     * Service used to retrieve the actual GSDate 
+     */
     private Service<String> dateService = new Service<>() {
 
         @Override
@@ -149,7 +152,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
             };
         }
     };
-
+    /**
+     * Service to retrieve the last Directory used as an String
+     */
     private Service<String> lastURService = new Service<>() {
 
         @Override
@@ -164,6 +169,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
+    /**
+     * Service to store the properties to the computer's app data storage
+     */
     private Service<Boolean> storePropertiesService = new Service<>() {
 
         @Override
@@ -181,7 +189,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     /**
-     * Service to load form disk
+     * Service to load Characters form disk to ram
      */
     private Service<Boolean> loadService = new Service<>() {
 
@@ -200,8 +208,8 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
-        /**
-     * Service to save to disk
+    /**
+     * Service to save from Ram to Disk
      */
     private Service<Boolean> saveService = new Service<>() {
 
@@ -211,7 +219,6 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected Boolean call() {
-             
                     return Boolean.TRUE;
                 }
             };
@@ -268,7 +275,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     }
 
     public void updateCharacters() {
-        characerService.restart();
+        this.loadCharacters();
     }
 
     public void selectNewDirectory(String url) {
