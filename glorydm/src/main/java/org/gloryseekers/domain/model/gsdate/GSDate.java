@@ -14,7 +14,7 @@ public class GSDate {
      * Allocates a GSDate objetct and initializes it so that it represents the day one of the year 1000.
      */
     public GSDate() {
-        this.daysFromDayCero = 360000;
+        this.daysFromDayCero = 359640;//It indexes at 0 but the time not
     }
 
     private GSDate(long daysFromDayCero) {

@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.gsdate.GSDate;
+import org.gloryseekers.domain.model.gsdate.GSDateFormater;
 import org.gloryseekers.infra.material.NewCharacterWindow;
 import org.gloryseekers.infra.preferences.AppPreferences;
 
@@ -182,11 +184,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected String call() throws Exception {
-                    /*
-                     * GSDate date = managementPort.getDate(); GSDateFormater gsDateFormater = new
-                     * GSDateFormater(); return gsDateFormater.format(date);
-                     */
-                    return "Ichigatsu, 1, 1001";
+                     GSDate date = managementPort.getDate();
+                     GSDateFormater gsDateFormater = new GSDateFormater();
+                     return gsDateFormater.format(date);
                 }
 
             };
