@@ -27,8 +27,6 @@ public class GSDateFormater {
      * Formats a GSDate into a string.
      * @param date
      * @return
-     * 
-     * Better solution: Implement toString() method on GSDate
      */
     public String format(GSDate date) {
         return format(date, GSDateFormat.SHORT);
