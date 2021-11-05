@@ -195,6 +195,7 @@ public class CharacterManager implements ManagementPort {
 			return true;
 		}
 		catch(IOException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -216,6 +217,7 @@ public class CharacterManager implements ManagementPort {
 			return true;
 		}
 		catch(IOException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

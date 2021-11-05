@@ -4,18 +4,18 @@ import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.*;
 import org.gloryseekers.infra.*;
 import org.gloryseekers.infra.view.UI;
-/*
+
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.domain.model.*;
-*/
+
 public class App {
     public static void main(String[] args) {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
         final ManagementPort managementPort = CharacterManager.getInstance(storageManager);
         final UI ui = new UI(); //load graphical interface    
-        ui.start(); //launch app
+        //ui.start(); //launch app
         
-       /* 
+        
         /////////////////////////////////////ALPHA TEST////////////////////////////////////////
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         
@@ -92,7 +92,8 @@ public class App {
         
         //Storagement test
         manager.storeCharacter(c1,"charSaves\\");
-        manager.storeCharacter(c2);
+        manager.storeCharacter(c2,"charSaves\\");
+        /*
         System.out.println("Saved: "+c1.toString()+"\nWith name and owner: "+c1.getName()+" "+c1.getOwnerName()+
         		"\nAttr: "+c1.getDisc()+" "+c1.getFort()+"\nSilver: "+c1.getSilver()+"\nAnd Inventory:"+c1.getInventario().toString());
         Character c1Loaded = manager.loadCharacter("Ramon Y Cajal_Juan.xml");
@@ -102,5 +103,6 @@ public class App {
         System.out.println("\nYou should see all stored characters here: "+allCharacters.toString());
         System.out.println("\nSeems OK!!!!");
         */
+        
     }
 }
