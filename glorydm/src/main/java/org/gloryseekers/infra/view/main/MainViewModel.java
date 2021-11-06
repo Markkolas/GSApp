@@ -185,7 +185,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
                 @Override
                 protected String call() throws Exception {
                      GSDate date = managementPort.getDate();
-                     GSDateFormater gsDateFormater = new GSDateFormater();
+                     GSDateFormater gsDateFormater = GSDateFormater.getDateInstance();
                      return gsDateFormater.format(date);
                 }
 
