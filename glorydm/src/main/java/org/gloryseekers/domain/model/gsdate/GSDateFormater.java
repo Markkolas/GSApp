@@ -5,7 +5,7 @@ package org.gloryseekers.domain.model.gsdate;
  */
 public class GSDateFormater {
 
-    public GSDateFormater() {
+    private GSDateFormater() {
 
     }
 
@@ -25,13 +25,19 @@ public class GSDateFormater {
 
     /**
      * Formats a GSDate into a string.
-     * @param date
-     * @return
+     * @param date The GSDate to be formated.
+     * @return A string containing the formatted GSDate.
      */
     public String format(GSDate date) {
         return format(date, GSDateFormat.SHORT);
     }
 
+    /**
+     * Formats a GSDate into a string.
+     * @param date The GSDate to be formated.
+     * @param format The desired format.
+     * @return A string containing the formatted GSDate.
+     */
     public String format(GSDate date, GSDateFormat format) {
         switch(format) {
             case SHORT:
@@ -56,18 +62,36 @@ public class GSDateFormater {
         return null;
     }
 
+    /**
+     * Returns an int that represents the year number of the GSDate.
+     * @param date The GSDate.
+     * @return int that represents the year number of the date.
+     */
     public int getYear(GSDate date) {
         return (int) (date.getGSDTime() / 360) + 1; 
     }
-
+    /**
+     * Returns an int that represents the month number of the GSDate.
+     * @param date The GSDate.
+     * @return int that represents the month number of the date.
+     */
     public int getMonth(GSDate date) {
         return (int) ((date.getGSDTime() % 360) / 30) + 1;
     }
-
+    /**
+     * Returns an int that represents the day number of the GSDate.
+     * @param date The GSDate.
+     * @return int that represents the day number of the date.
+     */
     public int getDay(GSDate date) {
         return (int) ((date.getGSDTime() % 360) % 30) + 1;
     }
 
+    /**
+     * Returns a String with the name of the month corresponding to the given GSDate.
+     * @param date The GSDate.
+     * @return String with the name of the month corresponding to the given GSDate.
+     */
     public String getMonthName(GSDate date) {
         switch (this.getMonth(date)) {
             case 1: 
