@@ -12,9 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 
 import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.model.Character;
@@ -25,10 +27,16 @@ public class CharacterXML implements CharacterPort {
 	public CharacterXML() {
 		//Configuration stage
 		//This is needed bacause we handle polymorphism
-		PolymorphicTypeValidator p = BasicPolymorphicTypeValidator.builder().allowIfSubType("org.gloryseekers.domain.model").allowIfSubType(Map.class).build();
+		
+		PolymorphicTypeValidator p = BasicPolymorphicTypeValidator.builder()
+				.allowIfSubType("org.gloryseekers.domain.model")
+				.allowIfSubType(Map.class)
+				.build();
+				
 		
 		xmlMapper = new XmlMapper();
-		xmlMapper.activateDefaultTyping(p, XmlMapper.DefaultTyping.NON_FINAL);
+		xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		xmlMapper.activateDefaultTyping(p, DefaultTyping.OBJECT_AND_NON_CONCRETE);
 		
 		
 	}
@@ -66,9 +74,6 @@ public class CharacterXML implements CharacterPort {
     public void storeCharacter(Character c, String saveDirectoryPath) throws IOException{
         // TODO Auto-generated method stub
 		String xmlString = xmlMapper.writeValueAsString(c);
-    	
-    	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    	xmlMapper.writeValue(byteArrayOutputStream, c);
     	
     	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".xml";
     	
