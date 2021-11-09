@@ -1,9 +1,9 @@
 module org.gloryseekers {
     requires javafx.controls;
-    requires com.fasterxml.jackson.dataformat.xml;
+    //requires com.fasterxml.jackson.dataformat.xml;
     requires com.fasterxml.jackson.databind;
     requires javafx.fxml;
-    requires com.ctc.wstx; //Woodstox StAX
+    //requires com.ctc.wstx; //Woodstox StAX
     exports org.gloryseekers;
     exports org.gloryseekers.infra to javafx.graphics;
     exports org.gloryseekers.domain.model to com.fasterxml.jackson.databind;

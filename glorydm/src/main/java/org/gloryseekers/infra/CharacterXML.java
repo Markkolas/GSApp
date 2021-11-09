@@ -11,19 +11,20 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 
 import org.gloryseekers.domain.CharacterPort;
 import org.gloryseekers.domain.model.Character;
 
 public class CharacterXML implements CharacterPort {
 
-	private final XmlMapper xmlMapper;
+	private final ObjectMapper mapper;
 	public CharacterXML() {
 		//Configuration stage
 		//This is needed bacause we handle polymorphism
@@ -34,9 +35,11 @@ public class CharacterXML implements CharacterPort {
 				.build();
 				
 		
-		xmlMapper = new XmlMapper();
-		xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		xmlMapper.activateDefaultTyping(p, DefaultTyping.OBJECT_AND_NON_CONCRETE);
+		mapper = new ObjectMapper();
+		mapper.activateDefaultTyping(p, DefaultTyping.JAVA_LANG_OBJECT)
+		.enable(SerializationFeature.INDENT_OUTPUT)
+		.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
+		.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
 		
 		
 	}
@@ -50,7 +53,7 @@ public class CharacterXML implements CharacterPort {
     	while((line = reader.readLine()) != null) xmlString += line;
     	reader.close();
     	
-        return xmlMapper.readValue(xmlString, Character.class);
+        return null;
     }
     
     public Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException {
@@ -73,13 +76,13 @@ public class CharacterXML implements CharacterPort {
     @Override
     public void storeCharacter(Character c, String saveDirectoryPath) throws IOException{
         // TODO Auto-generated method stub
-		String xmlString = xmlMapper.writeValueAsString(c);
+		String jsonString = mapper.writeValueAsString(c);
     	
-    	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".xml";
+    	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".json";
     	
     	BufferedWriter writer = new BufferedWriter(new FileWriter(path));
     	
-    	writer.write(xmlString);
+    	writer.write(jsonString);
     	writer.close();
     }
     
