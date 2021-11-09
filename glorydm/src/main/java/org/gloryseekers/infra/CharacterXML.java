@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ByteArrayOutputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +35,7 @@ public class CharacterXML implements CharacterPort {
 				
 		
 		mapper = new ObjectMapper();
+		
 		mapper.activateDefaultTyping(p, DefaultTyping.JAVA_LANG_OBJECT)
 		.enable(SerializationFeature.INDENT_OUTPUT)
 		.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
@@ -85,5 +85,4 @@ public class CharacterXML implements CharacterPort {
     	writer.write(jsonString);
     	writer.close();
     }
-    
 }

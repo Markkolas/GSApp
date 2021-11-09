@@ -14,8 +14,8 @@ public class Character {
     private String ownerName;
     private short load;
     
-    private final Consumible water = new Consumible("Agua", 1, 0, 4);
-    private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
+    private Consumible water = new Consumible("Agua", 1, 0, 4);
+    private Consumible rations = new Consumible("Raciones", 1, 0, 4);
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
@@ -26,11 +26,23 @@ public class Character {
 		this.state = state;
 		this.characterName = characterName;
 		this.ownerName = ownerName;
-		this.load = 2;
+		
+		updateLoad();
 	}
 	
-	public Character() {
+	//This will be usefull
+	public Character(short fort, short disc, float silver, boolean state, String characterName, String ownerName, Consumible water, Consumible rations, Map<String, Piece> inventario) {
+		this.fort = fort;
+		this.disc = disc;
+		this.silver = silver;
+		this.state = state;
+		this.characterName = characterName;
+		this.ownerName = ownerName;
+		this.water = water;
+		this.rations = rations;
+		this.inventario = inventario;
 		
+		updateLoad();
 	}
 
 	//GETTERS AND SETTERS
