@@ -92,3 +92,4 @@ glorydm/charSaves/
 ## logs
 ##############################
 *.log
+*.log.gz
