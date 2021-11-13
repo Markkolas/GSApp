@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.LogType;
 import org.gloryseekers.domain.model.gsdate.GSDate;
+import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.material.NewCharacterWindow;
 import org.gloryseekers.infra.preferences.AppPreferences;
 
@@ -80,7 +82,8 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                     @Override
                     public void run() {
-                        event.getSource().getException().printStackTrace();
+                        GSLogger.log(MainViewModel.class, LogType.INFO, text);
+                        GSLogger.log(MainViewModel.class, LogType.ERROR, event.getSource().getException().getMessage());
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText(null);
                         alert.setTitle("ERROR");

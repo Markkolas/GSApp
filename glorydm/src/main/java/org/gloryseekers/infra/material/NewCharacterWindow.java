@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.infra.log.GSLogger;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +26,7 @@ public class NewCharacterWindow extends Stage {
             Scene scene = new Scene(fxmlLoader.load());
             this.setScene(scene);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            GSLogger.log(NewCharacterWindow.class, LogType.ERROR, e.getMessage());
         }
     }
 

@@ -41,7 +41,8 @@ public class SplashController {
                     fxmlLoader.setController(new MainController());
                     root = fxmlLoader.load();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    GSLogger.log(SplashController.class, LogType.FATAL, e.getMessage());
+                    Platform.exit();//close the app if we cant load the main view
                 }
                 var scene = new Scene(root);
                 Stage stage = new Stage();

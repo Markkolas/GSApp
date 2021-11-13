@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.LogType;
 import org.gloryseekers.domain.model.gsdate.GSDate;
 import org.gloryseekers.domain.model.gsdate.GSDateFormater;
+import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.material.CharacterCard;
 import org.gloryseekers.infra.view.main.MainViewModel.MainViewModelInterface;
 
@@ -84,8 +86,12 @@ public class MainController implements MainViewModelInterface {
     public void selectDirectory(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(rootTabPane.getScene().getWindow());
-        System.out.println("URL selected: " + selectedDirectory.toString()); // control null pls
-        mainViewModel.selectNewDirectory(selectedDirectory.toString());
+        if(selectedDirectory!=null) {
+            GSLogger.log(MainController.class, LogType.INFO, "URL selected: " + selectedDirectory.toString());
+            mainViewModel.selectNewDirectory(selectedDirectory.toString());
+        } else {
+            GSLogger.log(MainController.class, LogType.INFO, "DirectoryChooser closed");
+        }
     }
 
     //Delegates

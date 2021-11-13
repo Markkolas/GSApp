@@ -37,8 +37,7 @@ public class CharacterXML implements CharacterPort {
 	}
 	
     @Override
-    public Character loadCharacter(String absolutePath) throws IOException{
-        // TODO Auto-generated method stub
+    public Character loadCharacter(String absolutePath) throws IOException {
     	BufferedReader reader = new BufferedReader(new FileReader(absolutePath));
     	
     	String line, xmlString="";
