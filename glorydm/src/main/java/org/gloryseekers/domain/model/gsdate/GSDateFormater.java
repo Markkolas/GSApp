@@ -95,29 +95,29 @@ public class GSDateFormater {
     public String getMonthName(GSDate date) {
         switch (this.getMonth(date)) {
             case 1: 
-                return "ichigatsu";
+                return "Ichigatsu";
             case 2:
-                return "nigatsu";
+                return "Nigatsu";
             case 3:
-                return "sangatsu";
+                return "Sangatsu";
             case 4:
-                return "yongatsu";
+                return "Yongatsu";
             case 5:
-                return "gogatsu";
+                return "Gogatsu";
             case 6:
-                return "rokugatsu";
+                return "Rokugatsu";
             case 7:
-                return "sichigatsu";
+                return "Sichigatsu";
             case 8:
-                return "hachigatsu";
+                return "Hachigatsu";
             case 9:
-                return "kugatsu";
+                return "Kugatsu";
             case 10:
-                return "yugatsu";
+                return "Yugatsu";
             case 11:
-                return "yuichigatsu";
+                return "Yuichigatsu";
             case 12:
-                return "yunigatsu";
+                return "Yunigatsu";
             default:
                 return null;
         }

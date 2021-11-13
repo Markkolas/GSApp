@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 
 public class MainController implements MainViewModelInterface {
@@ -32,6 +33,9 @@ public class MainController implements MainViewModelInterface {
 
     @FXML
     private FlowPane charactersCardPane;
+
+    @FXML
+    private Text monthText;
 
     @FXML
     private Button calendarButton;
@@ -73,7 +77,7 @@ public class MainController implements MainViewModelInterface {
 
     private void paintNewDate(GSDate date) {
         calendarButton.setText(GSDateFormater.getDateInstance().format(date));
-        //TODO: tab2 logic
+        monthText.setText(GSDateFormater.getDateInstance().getMonthName(date));//This is temporal
     }
 
     @FXML
