@@ -17,11 +17,12 @@
 	
     <Loggers>
         <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="org.gloryseekers" level="debug" additivity="false">
+        <Logger name="org.gloryseekers" level="all" additivity="false">
             <AppenderRef ref="LogToRollingFile"/>
             <AppenderRef ref="LogToConsole"/>
         </Logger>
         <Root level="error">
+            <AppenderRef ref="LogToRollingFile"/>
             <AppenderRef ref="LogToConsole"/>
         </Root>
     </Loggers>
