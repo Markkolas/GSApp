@@ -1,5 +1,10 @@
 package org.gloryseekers.domain.model;
 
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!README!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Before making ANY changes to class attributes, please take care look at CharacterXML.java code, specially the initial comment
+ */
+
 public abstract class Piece {
 	private String name;
 	//Integer class implements methos to treat ints as unsigned values, but Java dosent implement the structure itself

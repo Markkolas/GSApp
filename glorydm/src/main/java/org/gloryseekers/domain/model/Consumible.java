@@ -1,5 +1,10 @@
 package org.gloryseekers.domain.model;
 
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!README!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Before making ANY changes to class attributes, please take care look at CharacterXML.java code, specially the initial comment
+ */
+
 public class Consumible extends Piece{
 	private int charges;
 	

@@ -29,6 +29,20 @@ import org.gloryseekers.domain.model.Loot;
 import org.gloryseekers.domain.model.Equip;
 import org.gloryseekers.domain.model.Consumible;
 
+
+/*
+ * PLEASE READ:
+ * 
+ * This code depends on the core of the application, although the core dosent depend on this (following the hexagonal architecture).
+ * This class serializes to and deserializes from JSON files wich contains data related to one character. To archive this, Jackson databing
+ * library is used.
+ * The serialization is done automatically using the fields of the Character class. It is implemented in the storeCharacter() method.
+ * The deserialization is NOT done automatically. Care must be taken when changing the attributes of Character or Piece (and sons)
+ * classes. The deserialization code is in loadCharacter() method. Please, if you change the data structure of any class that has to be
+ * serialized, ensure to make the corresponding changes here so the characters can be satisfactorily loaded. These changes could consist on changing
+ * the index names used to load the attributes or add specific load logic.
+ */
+
 public class CharacterXML implements CharacterPort {
 
 	private final ObjectMapper mapper;

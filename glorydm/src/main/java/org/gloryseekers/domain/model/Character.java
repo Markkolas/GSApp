@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.HashMap;
 
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!README!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Before making ANY changes to class attributes, please take care look at CharacterXML.java code, specially the initial comment
+ */
 public class Character {
 	private short fort;
     private short disc;
