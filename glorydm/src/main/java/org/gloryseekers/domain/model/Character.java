@@ -14,8 +14,8 @@ public class Character {
     private String ownerName;
     private short load;
     
-    private Consumible water = new Consumible("Agua", 1, 0, 4);
-    private Consumible rations = new Consumible("Raciones", 1, 0, 4);
+    private Consumible water;
+    private Consumible rations;
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
@@ -26,6 +26,9 @@ public class Character {
 		this.state = state;
 		this.characterName = characterName;
 		this.ownerName = ownerName;
+		
+		this.water = new Consumible("Agua", 0, 4);
+		this.rations = new Consumible("Raciones", 0, 4);
 		
 		updateLoad();
 	}

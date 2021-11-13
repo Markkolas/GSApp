@@ -7,14 +7,6 @@ public class Loot extends Piece {
 		super(name, weigth, value);
 		this.ammount = ammount;
 	}
-
-	public int getAmmount() {
-		return ammount;
-	}
-
-	public void setAmmount(int ammount) {
-		this.ammount = ammount;
-	}
 	
 	public int[] getTypeAndAmmountOrCharges() {
 		int[] i = new int[] {2,ammount};

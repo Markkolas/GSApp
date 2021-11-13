@@ -5,10 +5,12 @@ import org.gloryseekers.domain.model.*;
 import org.gloryseekers.domain.model.Character;
 import org.gloryseekers.domain.model.gsdate.GSDate;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterManager implements ManagementPort {
@@ -190,7 +192,7 @@ public class CharacterManager implements ManagementPort {
 			 * 
 			 * TODO: Implement equals() method in Character and inventory classes so we can compare by using forEach() or containsValue() method.
 			 */
-			Character c = characterPort.loadCharacter(absolutePath);
+			Character c = characterPort.loadCharacter(new File(absolutePath));
 			characters.put(c.hashCode(), c);
 			return true;
 		}
@@ -202,7 +204,7 @@ public class CharacterManager implements ManagementPort {
 	
 	public boolean loadAllCharacters(String loadDirectoryPath){
 		try {
-			characters = characterPort.loadAllCharacters(loadDirectoryPath);
+			characters = characterPort.loadAllCharacters(new File(loadDirectoryPath));
 			return true;
 		}
 		catch(IOException e) {

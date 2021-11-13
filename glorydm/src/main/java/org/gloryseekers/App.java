@@ -13,9 +13,9 @@ public class App {
     	final CharacterPort storageManager = new CharacterXML(); //load storage adapter
         final ManagementPort managementPort = CharacterManager.getInstance(storageManager);
         final UI ui = new UI(); //load graphical interface    
-        //ui.start(); //launch app
+        ui.start(); //launch app
         
-        
+        /*
         /////////////////////////////////////ALPHA TEST////////////////////////////////////////
         ManagementPort manager = CharacterManager.getInstance(storageManager);
         
