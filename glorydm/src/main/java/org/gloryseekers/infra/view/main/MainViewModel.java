@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.domain.model.gsdate.GSDate;
+import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.material.NewCharacterWindow;
 import org.gloryseekers.infra.preferences.AppPreferences;
 
@@ -31,7 +34,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     /**
      * The controller corresponding to this model.
      */
-    private MainController controller;
+    private MainViewModelInterface controller;
 
     /**
      * The AppPreferences instance.
@@ -43,7 +46,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
      * 
      * @param controller The controller corresponding to this model.
      */
-    public MainViewModel(MainController controller) {
+    public MainViewModel(MainViewModelInterface controller) {
         this.preferences = AppPreferences.getSystemInstance();
         this.controller = controller;
         this.managementPort = CharacterManager.getInstance();
@@ -79,7 +82,8 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                     @Override
                     public void run() {
-                        event.getSource().getException().printStackTrace();
+                        GSLogger.log(MainViewModel.class, LogType.INFO, text);
+                        GSLogger.log(MainViewModel.class, LogType.ERROR, event.getSource().getException().getMessage());
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText(null);
                         alert.setTitle("ERROR");
@@ -99,7 +103,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
             @Override
             public void handle(WorkerStateEvent event) {
-                controller.paintCharacters((List<Character>) event.getSource().getValue());
+            controller.handleNewCharacterList((List<Character>) event.getSource().getValue());
             }
 
         });
@@ -129,6 +133,13 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
      */
     private void configureDateService() {
         configureError(dateService, "La fecha no carga correctamente");
+
+        dateService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+               controller.handleNewDate((GSDate) event.getSource().getValue());
+            }
+        });
 
     }
 
@@ -174,24 +185,21 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     /**
      * Service used to retrieve the actual GSDate.
      */
-    private Service<String> dateService = new Service<>() {
+    private Service<GSDate> dateService = new Service<>() {
 
         @Override
-        protected Task<String> createTask() {
-            return new Task<String>() {
+        protected Task<GSDate> createTask() {
+            return new Task<GSDate>() {
 
                 @Override
-                protected String call() throws Exception {
-                    /*
-                     * GSDate date = managementPort.getDate(); GSDateFormater gsDateFormater = new
-                     * GSDateFormater(); return gsDateFormater.format(date);
-                     */
-                    return "Ichigatsu, 1, 1001";
+                protected GSDate call() throws Exception {
+                     return managementPort.getDate();
                 }
 
             };
         }
     };
+
     /**
      * Service to retrieve the last Directory used as an String.
      */
@@ -324,7 +332,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         loadCharactersFromDisk();
     }
 
-    public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
+    public ReadOnlyObjectProperty<GSDate> getCurrentGameDateProperty() {
         return this.dateService.valueProperty();
     }
 
@@ -333,6 +341,13 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     @Override
     public void handleNewCharacterWindowReturn() {
         this.updateCharacters();
+    }
+
+    public interface MainViewModelInterface {
+
+        public void handleNewCharacterList(List<Character> characters);
+
+        public void handleNewDate(GSDate date);
     }
 
 }

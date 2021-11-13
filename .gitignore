@@ -86,4 +86,10 @@ nb-configuration.xml
 ##############################
 ## Saving XML files
 ##############################
-charSaves/
+glorydm/charSaves/
+
+##############################
+## logs
+##############################
+*.log
+*.log.gz

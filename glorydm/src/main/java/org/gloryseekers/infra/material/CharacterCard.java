@@ -3,6 +3,10 @@ package org.gloryseekers.infra.material;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.infra.log.GSLogger;
+
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -39,8 +43,7 @@ public class CharacterCard extends AnchorPane {
         try{
             fxmlLoader.load();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            GSLogger.log(CharacterCard.class, LogType.ERROR, e.getMessage());
         }
     }
 

@@ -2,6 +2,8 @@ package org.gloryseekers.infra.view;
 
 import java.io.IOException;
 
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.view.main.MainController;
 
 import javafx.application.Platform;
@@ -26,12 +28,11 @@ public class SplashController {
         @Override
         public void run() {
             try {
-                Thread.sleep(1000); //IDK MEN :D
+                Thread.sleep(1000); // This sleep gives the loader enough time to load the splash screen. In GNU/Linux it still does not load the image correctly.
             } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                GSLogger.log(SplashScreen.class, LogType.WARNING, e1.getMessage());
             }
-
+            GSLogger.log(SplashScreen.class, LogType.INFO, "Load main view");
             Platform.runLater(() -> {
                
                 BorderPane root = null;
@@ -40,7 +41,8 @@ public class SplashController {
                     fxmlLoader.setController(new MainController());
                     root = fxmlLoader.load();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    GSLogger.log(SplashController.class, LogType.FATAL, e.getMessage());
+                    Platform.exit();//close the app if we cant load the main view
                 }
                 var scene = new Scene(root);
                 Stage stage = new Stage();
