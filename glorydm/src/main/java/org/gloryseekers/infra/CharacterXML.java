@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
+import java.util.Collection;
 
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
@@ -65,9 +66,9 @@ public class CharacterXML implements CharacterPort {
 	}
 	
     @Override
-    public Character loadCharacter(File jsonFile) throws IOException{
+    public Character loadCharacter(String absolutePath) throws IOException{
         // TODO Auto-generated method stub
-    	BufferedReader reader = new BufferedReader(new FileReader(jsonFile));
+    	BufferedReader reader = new BufferedReader(new FileReader(new File(absolutePath)));
     	/*
     	 * Javascript Arrays will appear constantly because we need to constantly know what class we are handling. The type of class will be in the 
     	 * first element of the array (index 0) and the data on the second (index 1)
@@ -105,13 +106,14 @@ public class CharacterXML implements CharacterPort {
         		inventory);
     }
     
-    public Map<Integer, Character> loadAllCharacters(File directory) throws IOException {
+    public Map<Integer, Character> loadAllCharacters(String loadDirectoryPath) throws IOException {
     	Map<Integer, Character> map = new HashMap<Integer, Character>();
     	Character c;
+    	File directory = new File(loadDirectoryPath);
     	
     	for(File file : directory.listFiles()) {
     		if(file.getName().contains(".json")) {
-    			c = loadCharacter(file);
+    			c = loadCharacter(file.getAbsolutePath());
     			map.put(c.hashCode(), c);
     		}
     	}
@@ -132,6 +134,10 @@ public class CharacterXML implements CharacterPort {
     	writer.write(jsonString);
     	writer.close();
     } 
+    
+    public void storeAllCharacters(Collection<Character> collection, String saveDirectoryPath) throws IOException{
+    	for(Character c : collection) storeCharacter(c, saveDirectoryPath);
+    }
     
     private Map<String,Piece> createInventory(JsonNode inventoryNode){
     	if(inventoryNode.isEmpty()) return new HashMap<String, Piece>();

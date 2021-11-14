@@ -8,6 +8,8 @@ import org.gloryseekers.domain.model.gsdate.GSDate;
 import java.io.File;
 import java.io.IOException;
 
+import org.gloryseekers.infra.log.GSLogger;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -184,7 +186,7 @@ public class CharacterManager implements ManagementPort {
 	 * will be used in conjuction with getCharactersMap() method.
 	 */
 	
-	public boolean loadCharacter(String absolutePath) {
+	public void loadCharacter(String absolutePath) {
 		try {
 			/* THIS IS NOT VERY CHEEKI BREEEKI
 			 * By doing this, user could load an already loaded character, creating not a logic but conceptual duplicate of the character.
@@ -192,35 +194,42 @@ public class CharacterManager implements ManagementPort {
 			 * 
 			 * TODO: Implement equals() method in Character and inventory classes so we can compare by using forEach() or containsValue() method.
 			 */
-			Character c = characterPort.loadCharacter(new File(absolutePath));
+			GSLogger.log(CharacterManager.class, LogType.INFO, "Loading character in file: "+absolutePath);
+			Character c = characterPort.loadCharacter(absolutePath);
 			characters.put(c.hashCode(), c);
-			return true;
 		}
 		catch(IOException e) {
+			GSLogger.log(CharacterManager.class, LogType.ERROR, "Unable to load file: "+absolutePath+"\n"+e.toString()); 
 			e.printStackTrace();
-			return false;
 		}
 	}
 	
-	public boolean loadAllCharacters(String loadDirectoryPath){
+	public void loadAllCharacters(String loadDirectoryPath){
 		try {
-			characters = characterPort.loadAllCharacters(new File(loadDirectoryPath));
-			return true;
+			
+			characters = characterPort.loadAllCharacters(loadDirectoryPath);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 	
-	public boolean storeCharacter(Character c, String saveDirectoryPath) {
+	public void storeCharacter(Character c, String saveDirectoryPath) {
 		try {
+			GSLogger.log(CharacterManager.class, LogType.INFO, "Saving character "+c.getName()+" in directory: "+saveDirectoryPath);
 			characterPort.storeCharacter(c, saveDirectoryPath);
-			return true;
 		}
 		catch(IOException e) {
-			e.printStackTrace();
-			return false;
+			GSLogger.log(CharacterManager.class, LogType.ERROR, "Unable to save character in directory: "+saveDirectoryPath+"\n"+e.toString());
+		}
+	}
+	
+	public void storeAllCharacters(String saveDirectoryPath) {
+		try {
+			characterPort.storeAllCharacters(characters.values(), saveDirectoryPath);
+		}
+		catch(IOException e) {
+			GSLogger.log(CharacterManager.class, LogType.ERROR, "Unable to save characters: "+e.toString());
 		}
 	}
 }
