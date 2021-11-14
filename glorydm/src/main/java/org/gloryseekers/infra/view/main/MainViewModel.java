@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 import org.gloryseekers.aplication.CharacterManager;
 import org.gloryseekers.domain.ManagementPort;
 import org.gloryseekers.domain.model.Character;
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.domain.model.gsdate.GSDate;
+import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.material.NewCharacterWindow;
 import org.gloryseekers.infra.preferences.AppPreferences;
 
@@ -18,15 +21,32 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
+/**
+ * The view model corresponding to the main view.
+ */
 public class MainViewModel implements NewCharacterWindow.Delegate {
 
+    /**
+     * The ManagementPort instance.
+     */
     private ManagementPort managementPort;
 
-    private MainController controller;
+    /**
+     * The controller corresponding to this model.
+     */
+    private MainViewModelInterface controller;
 
+    /**
+     * The AppPreferences instance.
+     */
     private AppPreferences preferences;
 
-    public MainViewModel(MainController controller) {
+    /**
+     * Creates a new intance using the arguments provided.
+     * 
+     * @param controller The controller corresponding to this model.
+     */
+    public MainViewModel(MainViewModelInterface controller) {
         this.preferences = AppPreferences.getSystemInstance();
         this.controller = controller;
         this.managementPort = CharacterManager.getInstance();
@@ -34,6 +54,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         dateService.start();
     }
 
+    /**
+     * Configures all this view services
+     */
     private void configureServices() {
         configureCharacterService();
         configureDateService();
@@ -41,6 +64,14 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureLoadService();
     }
 
+    /**
+     * Configures the given service so that if its status changes to FAILED the app
+     * show an alert with the given text and the Exception that caused the failure.
+     * 
+     * @param <T>
+     * @param service The Service which is going to be configured.
+     * @param text    A string which represents the error text.
+     */
     private <T> void configureError(Service<T> service, String text) {
 
         service.setOnFailed(new EventHandler<WorkerStateEvent>() {
@@ -51,7 +82,8 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                     @Override
                     public void run() {
-                        event.getSource().getException().printStackTrace();
+                        GSLogger.log(MainViewModel.class, LogType.INFO, text);
+                        GSLogger.log(MainViewModel.class, LogType.ERROR, event.getSource().getException().getMessage());
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setHeaderText(null);
                         alert.setTitle("ERROR");
@@ -63,12 +95,15 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         });
     }
 
+    /**
+     * Configures the characterService.
+     */
     private void configureCharacterService() {
         characerService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
             @Override
             public void handle(WorkerStateEvent event) {
-                controller.paintCharacters((List<Character>) event.getSource().getValue());
+            controller.handleNewCharacterList((List<Character>) event.getSource().getValue());
             }
 
         });
@@ -76,13 +111,16 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureError(characerService, "No se cargaron correctamente los personajes");
     }
 
+    /**
+     * Configures the loadService.
+     */
     private void configureLoadService() {
         loadService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
             @Override
             public void handle(WorkerStateEvent event) {
                 System.out.println("Loaded from disk to ram");
-                loadCharacters();//(from ram)
+                loadCharacters();// (from ram)
             }
 
         });
@@ -90,11 +128,24 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         configureError(loadService, "No se cargaron correctamente los personajes del disco a ram");
     }
 
+    /**
+     * Configures the dateService.
+     */
     private void configureDateService() {
         configureError(dateService, "La fecha no carga correctamente");
 
+        dateService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+               controller.handleNewDate((GSDate) event.getSource().getValue());
+            }
+        });
+
     }
 
+    /**
+     * Configures the lastURLService.
+     */
     private void configureLastURService() {
 
         lastURService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -112,7 +163,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     // SERVICES
 
     /**
-     * Service with loads the Characters form ram
+     * Service with return Characters form ram.
      */
     private Service<List<Character>> characerService = new Service<>() {
 
@@ -131,25 +182,27 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
-    private Service<String> dateService = new Service<>() {
+    /**
+     * Service used to retrieve the actual GSDate.
+     */
+    private Service<GSDate> dateService = new Service<>() {
 
         @Override
-        protected Task<String> createTask() {
-            return new Task<String>() {
+        protected Task<GSDate> createTask() {
+            return new Task<GSDate>() {
 
                 @Override
-                protected String call() throws Exception {
-                    /*
-                     * GSDate date = managementPort.getDate(); GSDateFormater gsDateFormater = new
-                     * GSDateFormater(); return gsDateFormater.format(date);
-                     */
-                    return "Ichigatsu, 1, 1001";
+                protected GSDate call() throws Exception {
+                     return managementPort.getDate();
                 }
 
             };
         }
     };
 
+    /**
+     * Service to retrieve the last Directory used as an String.
+     */
     private Service<String> lastURService = new Service<>() {
 
         @Override
@@ -158,12 +211,15 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected String call() throws Exception {
-                    return preferences.getProperty("lastpartyurl"); // maybe I can  force an exception is  this is null
+                    return preferences.getProperty("lastpartyurl"); // maybe I can force an exception is this is null
                 }
             };
         }
     };
 
+    /**
+     * Service to store the properties to the computer's app data storage.
+     */
     private Service<Boolean> storePropertiesService = new Service<>() {
 
         @Override
@@ -181,7 +237,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     /**
-     * Service to load form disk
+     * Service to load Characters form disk to ram.
      */
     private Service<Boolean> loadService = new Service<>() {
 
@@ -200,8 +256,8 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         }
     };
 
-        /**
-     * Service to save to disk
+    /**
+     * Service to save from Ram to Disk.
      */
     private Service<Boolean> saveService = new Service<>() {
 
@@ -211,7 +267,6 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected Boolean call() {
-             
                     return Boolean.TRUE;
                 }
             };
@@ -244,7 +299,6 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         case RUNNING:
         case SCHEDULED:
         }
-        updateCharacters();
     }
 
     private void loadCharactersFromDisk() {
@@ -269,7 +323,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     }
 
     public void updateCharacters() {
-        characerService.restart();
+        this.loadCharacters();
     }
 
     public void selectNewDirectory(String url) {
@@ -278,7 +332,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         loadCharactersFromDisk();
     }
 
-    public ReadOnlyObjectProperty<String> getCurrentGameDateProperty() {
+    public ReadOnlyObjectProperty<GSDate> getCurrentGameDateProperty() {
         return this.dateService.valueProperty();
     }
 
@@ -287,6 +341,13 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     @Override
     public void handleNewCharacterWindowReturn() {
         this.updateCharacters();
+    }
+
+    public interface MainViewModelInterface {
+
+        public void handleNewCharacterList(List<Character> characters);
+
+        public void handleNewDate(GSDate date);
     }
 
 }

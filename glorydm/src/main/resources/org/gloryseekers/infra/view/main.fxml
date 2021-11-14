@@ -17,7 +17,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <TabPane fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" stylesheets="@gstyle.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -62,7 +61,7 @@
                         <HBox alignment="CENTER" layoutX="255.0" layoutY="14.0" prefHeight="70.0" prefWidth="200.0" style="-fx-spacing: 30;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
                            <children>
                               <Button mnemonicParsing="false" text="&lt;" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+                              <Text fx:id="monthText" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
                                  <font>
                                     <Font size="35.0" />
                                  </font>

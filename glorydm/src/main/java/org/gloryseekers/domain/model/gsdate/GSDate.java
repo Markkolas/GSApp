@@ -6,19 +6,19 @@ package org.gloryseekers.domain.model.gsdate;
 public class GSDate {
 
     /**
-     * The number of days since the day cero represented by this object.
+     * The number of days represented by this object.
      */
-    private long daysFromDayCero;
+    private long timeValue;
 
     /**
      * Allocates a GSDate objetct and initializes it so that it represents the day one of the year 1000.
      */
     public GSDate() {
-        this.daysFromDayCero = 360000;
+        this.timeValue = 359640;//It indexes at 0 but the time not
     }
 
     private GSDate(long daysFromDayCero) {
-        this.daysFromDayCero = daysFromDayCero;
+        this.timeValue = daysFromDayCero;
     }
 
     /**
@@ -31,11 +31,11 @@ public class GSDate {
     }
 
     /**
-     * Returns the number of days since the day cero represented by this object.
-     * @return the number of days since the day cero.
+     * Returns the number of days represented by this object.
+     * @return the number of days represented by this object.
      */
     public long getGSDTime() {
-        return this.daysFromDayCero;
+        return this.timeValue;
     }
 
 }

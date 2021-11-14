@@ -9,6 +9,7 @@ module org.gloryseekers {
     exports org.gloryseekers.domain.model to com.fasterxml.jackson.databind;
     exports org.gloryseekers.infra.view to javafx.graphics, javafx.fxml;
     exports org.gloryseekers.infra.material to javafx.fxml;
+    requires transitive log4j.api; 
     opens org.gloryseekers to javafx.fxml;
     opens org.gloryseekers.infra.material to javafx.fxml;
     opens org.gloryseekers.infra.view.main to javafx.fxml;

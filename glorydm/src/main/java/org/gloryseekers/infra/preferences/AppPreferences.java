@@ -13,6 +13,9 @@ import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.gloryseekers.domain.model.LogType;
+import org.gloryseekers.infra.log.GSLogger;
+
 public abstract class AppPreferences {
 
   protected final String PREFERENCES_FILE_NAME = "glorydm.properties";
@@ -35,28 +38,27 @@ public abstract class AppPreferences {
   }
 
   protected void initialize(String appDataURL) {
-    System.out.println("INIT AppPreferences");
+    GSLogger.log(AppPreferences.class, LogType.INFO, "INIT AppPreferences");
     properties = new Properties();
     Path path = Paths.get(appDataURL);
     File file;
     try {
       Files.createDirectories(path);
       file = new File(appDataURL + "/glorydm.properties");
-      System.out.print(appDataURL + "/glorydm.properties");
-      System.out.println((file.createNewFile())?"- Created":"- Exist");
+      GSLogger.log(AppPreferences.class, LogType.INFO, appDataURL + "/glorydm.properties");
+      System.out.println((file.createNewFile())?"- Created":"- Exist"); //This should be refactor to be logged properly.
       try {
           InputStream inputStream = new FileInputStream(file);
           InputStreamReader inputStreamReader = new InputStreamReader(inputStream);//I guess this should be open
           properties.load(inputStreamReader);
-          System.out.println("Properties loaded");
+          GSLogger.log(AppPreferences.class, LogType.INFO, "Properties loaded");
           this.outputStream = new FileOutputStream(file);
-          System.out.println("Setted outputStream");
-
+          GSLogger.log(AppPreferences.class, LogType.INFO, "Setted outputStream");
       } catch (IOException e) {
-        e.printStackTrace();
+        GSLogger.log(AppPreferences.class, LogType.ERROR, e.getMessage());
       }
     } catch (IOException e1) {
-      e1.printStackTrace();
+      GSLogger.log(AppPreferences.class, LogType.ERROR, e1.getMessage());
     }
   }
 
@@ -95,7 +97,7 @@ public abstract class AppPreferences {
     try {
       properties.store(this.outputStream, null);
     } catch (IOException e) {
-      e.printStackTrace();
+      GSLogger.log(AppPreferences.class, LogType.ERROR, e.getMessage());
       return false;
     }
     return true;
