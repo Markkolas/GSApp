@@ -1,4 +1,4 @@
-package org.gloryseekers.infra;
+package org.gloryseekers.infra.persistance.characters;
 
 import java.io.File;
 import java.io.BufferedReader;
@@ -44,10 +44,10 @@ import org.gloryseekers.domain.model.Consumible;
  * the index names used to load the attributes or add specific load logic.
  */
 
-public class CharacterXML implements CharacterPort {
+public class CharacterPersistor implements CharacterPort {
 
 	private final ObjectMapper mapper;
-	public CharacterXML() {
+	public CharacterPersistor() {
 		//Configuration stage
 		//This is needed bacause we handle polymorphism
 		
