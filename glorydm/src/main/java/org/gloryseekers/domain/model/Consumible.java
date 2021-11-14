@@ -9,7 +9,7 @@ public class Consumible extends Piece{
 	private int charges;
 	
 	public Consumible(String name, float value, int charges){
-		super(name, 0, value);
+		super(name, 1, value);
 		setAmmountOrCharges(charges);
 	}
 	public int[] getTypeAndAmmountOrCharges() {
@@ -19,7 +19,7 @@ public class Consumible extends Piece{
 	
 	public void setAmmountOrCharges(int value) {
 		charges = value;
-		if(value % 4 != 0) super.setWeight((value/4)+1);
-		else super.setWeight(value/4);
+		if(value % 4 != 0) super.setTotalWeight((value/4)+1);
+		else super.setTotalWeight(value/4);
 	}
 }

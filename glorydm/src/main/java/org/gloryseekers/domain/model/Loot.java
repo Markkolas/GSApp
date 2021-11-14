@@ -10,7 +10,7 @@ public class Loot extends Piece {
 	
 	public Loot(String name, int weigth, float value, int ammount){
 		super(name, weigth, value);
-		this.ammount = ammount;
+		setAmmountOrCharges(ammount);
 	}
 	
 	public int[] getTypeAndAmmountOrCharges() {
@@ -20,5 +20,6 @@ public class Loot extends Piece {
 	
 	public void setAmmountOrCharges(int value) {
 		ammount = value;
+		super.setTotalWeight(super.getWeightPerUnit()*ammount);
 	};
 }

@@ -140,12 +140,7 @@ public class Character {
 	
 	public void updateLoad() {
 		load=0;
-		for(Piece p : getInventario().values()) {
-			int[] info = p.getTypeAndAmmountOrCharges();
-			
-			if(info[0] !=1) load += p.getWeight()*info[1];
-			else load += p.getWeight();
-		}
+		for(Piece p : getInventario().values()) load += p.getTotalWeight();
 	}
 	
 	public short getLoad() {

@@ -149,7 +149,7 @@ public class CharacterXML implements CharacterPort {
     		case "org.gloryseekers.domain.model.Equip":
     			node = node.get(1);
     			e = new Equip(node.get("name").asText(),
-    					node.get("weight").asInt(),
+    					node.get("weightPerUnit").asInt(),
     					(float) node.get("value").asDouble(),
     					node.get("ammount").asInt());
     			inventory.put(e.getName(), e);
@@ -158,7 +158,7 @@ public class CharacterXML implements CharacterPort {
     		case "org.gloryseekers.domain.model.Loot":
     			node = node.get(1);
     			e = new Loot(node.get("name").asText(),
-    					node.get("weight").asInt(),
+    					node.get("weightPerUnit").asInt(),
     					(float) node.get("value").asDouble(),
     					node.get("ammount").asInt());
     			inventory.put(e.getName(), e);

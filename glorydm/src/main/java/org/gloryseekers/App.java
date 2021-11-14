@@ -33,7 +33,7 @@ public class App {
         System.out.println(c.getInventario().toString());
         
         Piece agua = c.getInventario().get("Agua");
-        System.out.println(agua.getName()+" "+agua.getValue()+" "+agua.getWeight()+" "+agua.getTypeAndAmmountOrCharges()[1]+"\n");
+        System.out.println(agua.getName()+" "+agua.getValue()+" "+agua.getTotalWeight()+" "+agua.getTypeAndAmmountOrCharges()[1]+"\n");
         
         //Modify characters and equipment
         c.setSilver(c.getSilver()-(float)1.6);
@@ -91,8 +91,8 @@ public class App {
         System.out.println("PreAlpha rest logic: OK\n");
         
         //Storagement test
-        manager.storeCharacter(c1,"charSaves\\");
-        manager.storeCharacter(c2,"charSaves\\");
+        manager.storeCharacter(c1,"charSaves/");
+        manager.storeCharacter(c2,"charSaves/");
         /*
         System.out.println("Saved: "+c1.toString()+"\nWith name and owner: "+c1.getName()+" "+c1.getOwnerName()+
         		"\nAttr: "+c1.getDisc()+" "+c1.getFort()+"\nSilver: "+c1.getSilver()+"\nAnd Inventory:"+c1.getInventario().toString());

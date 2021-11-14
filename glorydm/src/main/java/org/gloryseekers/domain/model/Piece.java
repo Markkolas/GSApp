@@ -8,12 +8,13 @@ package org.gloryseekers.domain.model;
 public abstract class Piece {
 	private String name;
 	//Integer class implements methos to treat ints as unsigned values, but Java dosent implement the structure itself
-	private int weight; 
+	private final int weightPerUnit;
+	private int totalWeight;
 	private float value;
 	
 	protected Piece(String name, int weigth, float value) {
 		this.name = name;
-		this.weight = weigth;
+		this.weightPerUnit = weigth;
 		this.value = value;
 	}
 	
@@ -24,11 +25,14 @@ public abstract class Piece {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getWeight() {
-		return weight;
+	public int getWeightPerUnit() {
+		return weightPerUnit;
 	}
-	public void setWeight(int weight) {
-		this.weight = weight;
+	public int getTotalWeight() {
+		return totalWeight;
+	}
+	public void setTotalWeight(int weight) {
+		this.totalWeight = weight;
 	}
 	public float getValue() {
 		return value;
