@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.HashMap;
 
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!README!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Before making ANY changes to class attributes, please take care look at CharacterXML.java code, specially the initial comment
+ */
 public class Character {
 	private short fort;
     private short disc;
@@ -14,8 +18,8 @@ public class Character {
     private String ownerName;
     private short load;
     
-    private final Consumible water = new Consumible("Agua", 1, 0, 4);
-    private final Consumible rations = new Consumible("Raciones", 1, 0, 4);
+    private Consumible water;
+    private Consumible rations;
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
 
@@ -26,7 +30,26 @@ public class Character {
 		this.state = state;
 		this.characterName = characterName;
 		this.ownerName = ownerName;
-		this.load = 2;
+		
+		this.water = new Consumible("Agua", 0, 4);
+		this.rations = new Consumible("Raciones", 0, 4);
+		
+		updateLoad();
+	}
+	
+	//This will be usefull
+	public Character(short fort, short disc, float silver, boolean state, String characterName, String ownerName, Consumible water, Consumible rations, Map<String, Piece> inventario) {
+		this.fort = fort;
+		this.disc = disc;
+		this.silver = silver;
+		this.state = state;
+		this.characterName = characterName;
+		this.ownerName = ownerName;
+		this.water = water;
+		this.rations = rations;
+		this.inventario = inventario;
+		
+		updateLoad();
 	}
 
 	//GETTERS AND SETTERS
@@ -117,12 +140,7 @@ public class Character {
 	
 	public void updateLoad() {
 		load=0;
-		for(Piece p : getInventario().values()) {
-			int[] info = p.getTypeAndAmmountOrCharges();
-			
-			if(info[0] !=1) load += p.getWeight()*info[1];
-			else load += p.getWeight();
-		}
+		for(Piece p : getInventario().values()) load += p.getTotalWeight();
 	}
 	
 	public short getLoad() {
