@@ -103,7 +103,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
             @Override
             public void handle(WorkerStateEvent event) {
-            controller.handleNewCharacterList((List<Character>) event.getSource().getValue());
+                controller.handleNewCharacterList((List<Character>) event.getSource().getValue());
             }
 
         });
@@ -137,7 +137,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         dateService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-               controller.handleNewDate((GSDate) event.getSource().getValue());
+                controller.handleNewDate((GSDate) event.getSource().getValue());
             }
         });
 
@@ -193,7 +193,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected GSDate call() throws Exception {
-                     return managementPort.getDate();
+                    return managementPort.getDate();
                 }
 
             };
@@ -267,6 +267,9 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
                 @Override
                 protected Boolean call() {
+                    String url = preferences.getProperty("lastpartyurl");
+                    System.out.println("Saving Characters to " + url);
+                    managementPort.storeAllCharacters(url);
                     return Boolean.TRUE;
                 }
             };
@@ -275,43 +278,59 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
     private void storeProperties() {
         switch (storePropertiesService.getState()) {
-        case CANCELLED:
-        case FAILED:
-        case SUCCEEDED:
-            storePropertiesService.restart();
-            break;
-        case READY:
-            storePropertiesService.start();
-        case RUNNING:
-        case SCHEDULED:
+            case CANCELLED:
+            case FAILED:
+            case SUCCEEDED:
+                storePropertiesService.restart();
+                break;
+            case READY:
+                storePropertiesService.start();
+            case RUNNING:
+            case SCHEDULED:
         }
     }
 
     private void loadCharacters() {
         switch (characerService.getState()) {
-        case CANCELLED:
-        case FAILED:
-        case SUCCEEDED:
-            characerService.restart();
-            break;
-        case READY:
-            characerService.start();
-        case RUNNING:
-        case SCHEDULED:
+            case CANCELLED:
+            case FAILED:
+            case SUCCEEDED:
+                characerService.restart();
+                break;
+            case READY:
+                characerService.start();
+            case RUNNING:
+            case SCHEDULED:
         }
     }
 
     private void loadCharactersFromDisk() {
         switch (loadService.getState()) {
-        case SUCCEEDED:
-        case CANCELLED:
-        case FAILED:
-            loadService.restart();
-            break;
-        case READY:
-            loadService.start();
-        case RUNNING:
-        case SCHEDULED:
+            case SUCCEEDED:
+            case CANCELLED:
+            case FAILED:
+                loadService.restart();
+                break;
+            case READY:
+                loadService.start();
+            case RUNNING:
+            case SCHEDULED:
+        }
+    }
+
+    private void saveCharactersToDisk() {
+        switch (saveService.getState()) {
+            case SUCCEEDED:
+                saveService.start();
+                break;
+            case CANCELLED:
+            case FAILED:
+                saveService.restart();
+                break;
+            case READY:
+                saveService.start();
+            case RUNNING:
+            case SCHEDULED:
         }
     }
 
@@ -330,6 +349,13 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
         AppPreferences.getSystemInstance().setProperty("lastpartyurl", url);
         storeProperties();
         loadCharactersFromDisk();
+    }
+
+    public boolean saveCharacters() {
+        if (AppPreferences.getSystemInstance().getProperty("lastpartyurl") == null)
+            return false;
+        saveCharactersToDisk();
+        return true;
     }
 
     public ReadOnlyObjectProperty<GSDate> getCurrentGameDateProperty() {

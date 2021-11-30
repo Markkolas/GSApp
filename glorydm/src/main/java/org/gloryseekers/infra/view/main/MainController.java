@@ -94,6 +94,11 @@ public class MainController implements MainViewModelInterface {
         }
     }
 
+    @FXML 
+    public void saveCharacters() {
+        mainViewModel.saveCharacters();// If no route has been selected before, this can be a disaster. The user will not be able to save and when he selects it he will lose his changes, you have to add logic for that.
+    }
+
     //Delegates
 
     @Override
