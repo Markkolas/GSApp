@@ -127,7 +127,7 @@ public class CharacterPersistor implements CharacterPort {
         // TODO Auto-generated method stub
 		String jsonString = mapper.writeValueAsString(c);
     	
-    	String path = saveDirectoryPath+c.getOwnerName()+"_"+c.getName()+".json";
+		String path = saveDirectoryPath+"/"+c.getOwnerName()+"_"+c.getName()+".json";
     	
     	BufferedWriter writer = new BufferedWriter(new FileWriter(path));
     	
