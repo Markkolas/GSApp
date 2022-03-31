@@ -6,6 +6,7 @@ import org.gloryseekers.domain.model.LogType;
 import org.gloryseekers.infra.log.GSLogger;
 import org.gloryseekers.infra.view.main.MainController;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SplashController {
 
@@ -27,14 +29,9 @@ public class SplashController {
 
         @Override
         public void run() {
-            try {
-                Thread.sleep(1000); // This sleep gives the loader enough time to load the splash screen. In GNU/Linux it still does not load the image correctly.
-            } catch (InterruptedException e1) {
-                GSLogger.log(SplashScreen.class, LogType.WARNING, e1.getMessage());
-            }
             GSLogger.log(SplashScreen.class, LogType.INFO, "Load main view");
-            Platform.runLater(() -> {
-               
+            PauseTransition pause = new PauseTransition(Duration.seconds(3)); //pause gives the loader enough time to load the splash screen. In GNU/Linux it still does not load the image correctly.
+            pause.setOnFinished(event -> {
                 BorderPane root = null;
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("main.fxml"));
@@ -50,8 +47,8 @@ public class SplashController {
                 stage.setMaximized(true);
                 stage.show();
                 splashPane.getScene().getWindow().hide();
-
             });
+            pause.play();
         }
 
     }
