@@ -10,15 +10,23 @@ import java.util.HashMap;
  * Before making ANY changes to class attributes, please take care look at CharacterXML.java code, specially the initial comment
  */
 public class Character {
+
 	private short fort;
+
     private short disc;
+
     private float silver;
+
     private boolean state;
+
     private String characterName;
+
     private String ownerName;
+
     private short load;
-    
+
     private Consumible water;
+	
     private Consumible rations;
     
     private Map<String, Piece> inventario = new HashMap<String, Piece>();
