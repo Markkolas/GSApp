@@ -152,7 +152,7 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
 
             @Override
             public void handle(WorkerStateEvent event) {
-                loadService.restart();
+                loadCharactersFromDisk();
             }
 
         });
@@ -277,58 +277,32 @@ public class MainViewModel implements NewCharacterWindow.Delegate {
     };
 
     private void storeProperties() {
-        switch (storePropertiesService.getState()) {
-            case CANCELLED:
-            case FAILED:
-            case SUCCEEDED:
-                storePropertiesService.restart();
-                break;
-            case READY:
-                storePropertiesService.start();
-            case RUNNING:
-            case SCHEDULED:
-        }
+        this.launchService(storePropertiesService);
     }
 
     private void loadCharacters() {
-        switch (characerService.getState()) {
-            case CANCELLED:
-            case FAILED:
-            case SUCCEEDED:
-                characerService.restart();
-                break;
-            case READY:
-                characerService.start();
-            case RUNNING:
-            case SCHEDULED:
-        }
+        this.launchService(characerService);
     }
 
     private void loadCharactersFromDisk() {
-        switch (loadService.getState()) {
-            case SUCCEEDED:
-            case CANCELLED:
-            case FAILED:
-                loadService.restart();
-                break;
-            case READY:
-                loadService.start();
-            case RUNNING:
-            case SCHEDULED:
-        }
+        this.launchService(loadService);
     }
 
     private void saveCharactersToDisk() {
-        switch (saveService.getState()) {
+        this.launchService(saveService);
+    }
+
+    // UTIL
+
+    private void launchService(Service service) {
+        switch (service.getState()) {
             case SUCCEEDED:
-                saveService.start();
-                break;
             case CANCELLED:
             case FAILED:
-                saveService.restart();
+                service.restart();
                 break;
             case READY:
-                saveService.start();
+                service.start();
             case RUNNING:
             case SCHEDULED:
         }

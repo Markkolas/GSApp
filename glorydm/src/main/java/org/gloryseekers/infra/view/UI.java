@@ -1,6 +1,5 @@
 package org.gloryseekers.infra.view;
 
-import org.gloryseekers.domain.ManagementPort;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
