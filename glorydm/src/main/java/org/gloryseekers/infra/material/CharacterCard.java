@@ -6,7 +6,6 @@ import java.io.InputStream;
 import org.gloryseekers.domain.model.LogType;
 import org.gloryseekers.infra.log.GSLogger;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -36,7 +35,7 @@ public class CharacterCard extends AnchorPane {
     /**
      * Instances a new CharacterCard.
      */
-    private CharacterCard() { // This is so f** slow, idk if I can just make an static loader or something.
+    private CharacterCard() { // This is so f** slow, too speed this up we may parse the fxml into code.
         FXMLLoader fxmlLoader = new FXMLLoader(CharacterCard.class.getResource("CharacterCard.fxml"));
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(this);

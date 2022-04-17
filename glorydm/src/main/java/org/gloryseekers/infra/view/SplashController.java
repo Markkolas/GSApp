@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -35,7 +34,7 @@ public class SplashController {
         public void run() {
             GSLogger.log(SplashScreen.class, LogType.INFO, "Load main view");
             PauseTransition pause = new PauseTransition(Duration.seconds(3)); //Pause gives the loader enough time to load the splash screen. In GNU/Linux it will problably fail if loading a jpg https://bbs.archlinux.org/viewtopic.php?pid=1967120#p1967120
-            if(background.imageProperty().get().isError()) GSLogger.log(SplashController.class,LogType.ERROR,background.imageProperty().get().exceptionProperty().get().toString());
+            if( background.imageProperty().get().isError() ) GSLogger.log( SplashController.class, LogType.ERROR,background.imageProperty().get().exceptionProperty().get().toString() );
             pause.setOnFinished(event -> {
                 BorderPane root = null;
                 try {
